@@ -1,0 +1,489 @@
+<!-- Start Flights List Area -->
+<section class="flights-list-area bg-default">
+<div class="container">
+<div class="row">
+		<div class="content mgt-40">
+				<div class="col-lg-3 col-md-4">
+						<div class="sidebar sidebar-right">
+								<div class="widget-sidebar widget-flight">
+								<ul class="menu-tag-form">
+										<li  class="choose" (click)="myClickFunction('ONE-WAY')">ONE-WAY</li>
+										<li  class="choose" (click)="myClickFunction('ROUND-TRIP')">ROUND-TRIP</li>
+								</ul>
+								<div class="form-content">
+								<div  class="inner-box-tab">
+								<form (ngSubmit)="this.searchFlights()" >
+								<div class="input-info-search">
+									<div class="field-row flex">
+										<div class="one-column">
+											<div class="input-form select-box">
+												<select [(ngModel)]="model.departItem" name="departItem">
+
+													<option *ngFor="let item of originList" [ngValue]="item">
+															<table class="align-lift">
+																	<tr>
+																		<i> {{item.city}}</i>
+																	</tr>
+															</table>
+													</option>
+												</select>
+											</div>
+										</div>
+										<div class="one-column">
+											<div class="input-form select-box">
+												<select [(ngModel)]="model.arrivalItem" name="arrivalItem">
+													<option *ngFor="let item of originList" [ngValue]="item">
+															<table class="align-lift">
+																	<tr>
+																		<i> {{item.city}}</i>
+																	</tr>
+															</table>
+													</option>
+												</select>
+											</div>
+										</div>
+									</div>
+
+									<div class="field-row flex">
+										<div class="one-column">
+												<div class="box-date">
+												<div class="input-form date form_date" data-date="" data-date-format="dd/mm/yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+
+														<input size="16" type="text"  name="departdate" [(ngModel)]="model.departdate" placeholder="29/03/2018" readonly="">
+														<span class="add-on"><i class="icon-remove"></i></span>
+														<span class="add-on"><i class="icon-th"></i></span>
+												</div>
+												</div>
+										</div>
+									</div>
+									<div *ngIf="roundtripenabled" class="field-row flex">
+										<div class="one-column">
+											<div class="box-date">
+												<div class="input-form date form_date" data-date="" data-date-format="dd/mm/yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+													<input size="16" type="text"  name="returndate" [(ngModel)]="model.returndate" placeholder="29/03/2018" readonly="">
+													<span class="add-on"><i class="icon-remove"></i></span>
+													<span class="add-on"><i class="icon-th"></i></span>
+													</div>
+											</div>
+										</div>
+									</div>
+									<div class="field-row flex">
+										<div class="one-column">
+												<div class="input-form select-box">
+												<select [(ngModel)]="model.adultCount" name="adultCount">
+												<option value="1">01 Adults</option>
+												<option value="2">02 Adults</option>
+												<option value="3">03 Adults</option>
+												<option value="4">04 Adults</option>
+												<option value="5">05 Adults</option>
+												<option value="6">06 Adults</option>
+												<option value="7">07 Adults</option>
+												<option value="8">08 Adults</option>
+												<option value="9">09 Adults</option>
+										</select>
+										</div>
+										</div>
+										<div class="one-column">
+												<div class="input-form select-box">
+													<select [(ngModel)]="model.childCount" name="childCount">
+													<option value="1">01 Childs</option>
+													<option value="2">02 Childs</option>
+													<option value="3">03 Childs</option>
+													<option value="4">04 Childs</option>
+													<option value="5">05 Childs</option>
+													<option value="6">06 Childs</option>
+													<option value="7">07 Childs</option>
+													<option value="8">08 Childs</option>
+											</select>
+											</div>
+										</div>
+										<div class="one-column">
+												<div class="input-form select-box">
+											<select [(ngModel)]="model.type" name="type">
+											<option value="Economy">Economy</option>
+											<option value="Business">Business</option>
+											<option value="First">First</option>
+												</select>
+												</div>
+										</div>
+									</div>
+									<div class="field-row flex">
+											<div class="one-column">
+													<div class="button-submit">
+															<button type="submit">FIND FLIGHT</button>
+													</div>
+											</div>
+									</div>
+								</div>
+								</form>
+								</div>
+
+								</div>
+								</div>
+								<div class="widget-sidebar widget-times">
+										<h6>CHOOSE <span>TIMES</span></h6>
+										<div class="widget-content">
+												<div class="select-time">
+														<p>Depart Time</p>
+														<div id="slider-range" class="slider-range"></div>
+														<span id="time" class="time"></span>
+												</div>
+												<div class="select-time">
+														<p>Return Time</p>
+														<div id="slider-range-1" class="slider-range"></div>
+														<span id="time-1" class="time"></span>
+												</div>
+										</div>
+								</div>
+								<div class="widget-sidebar widget-stops">
+										<h6>CHOOSE <span>STOPS</span></h6>
+										<div class="widget-content">
+												<form action="#" method="get" accept-charset="utf-8">
+														<div class="radio">
+																<input type="radio" id="non-stop" name="stops">
+																<label for="non-stop">Non Stop</label>
+														</div>
+														<div class="radio">
+																<input type="radio" id="1stop" name="stops">
+																<label for="1stop">1 Stop</label>
+														</div>
+														<div class="radio">
+																<input type="radio" id="2stops" name="stops">
+																<label for="2stops">2 Stops</label>
+														</div>
+														<div class="radio">
+																<input type="radio" id="anystops" name="stops">
+																<label for="anystops">Any Stops</label>
+														</div>
+														<div class="select-time">
+																<p>Onward Flight Duration</p>
+																<div id="slider-range-3" class="slider-range"></div>
+																<span id="time-3" class="time"></span>
+														</div>
+														<div class="select-time">
+																<p>Return Flight Duration</p>
+																<div id="slider-range-4" class="slider-range"></div>
+																<span id="time-4" class="time"></span>
+														</div>
+												</form>
+										</div>
+								</div>
+								<div class="widget-sidebar widget-airlines">
+										<h6>CHOOSE <span>AIRLINES</span></h6>
+										<div class="widget-content">
+												<form action="#" method="get" accept-charset="utf-8">
+														<div class="radio">
+																<input type="radio" id="american" name="airlines">
+																<label for="american">American Airlines</label>
+														</div>
+														<div class="radio">
+																<input type="radio" id="air-france" name="airlines">
+																<label for="air-france">Air France</label>
+														</div>
+														<div class="radio">
+																<input type="radio" id="iberia" name="airlines">
+																<label for="iberia">Iberia</label>
+														</div>
+														 <div class="radio">
+																<input type="radio" id="delta" name="airlines">
+																<label for="delta">Delta Air Lines</label>
+														</div>
+														<div class="radio">
+																<input type="radio" id="united" name="airlines">
+																<label for="united">United Airlines</label>
+														</div>
+														<div class="radio">
+																<input type="radio" id="brussel" name="airlines">
+																<label for="brussel">Brussels Airlines</label>
+														</div>
+														<div class="radio">
+																<input type="radio" id="vietnam" name="airlines">
+																<label for="vietnam">Vietnam Airlines</label>
+														</div>
+														<div class="radio">
+																<input type="radio" id="quatar" name="airlines">
+																<label for="quatar">Qatar Airways</label>
+														</div>
+														<div class="radio">
+																<input type="radio" id="singapore" name="airlines">
+																<label for="singapore">Singapore Airlines</label>
+														</div>
+												</form>
+										</div>
+								</div>
+						</div>
+				</div>
+				<div class="col-lg-9 col-md-8">
+						<ul class="process-flight">
+								<li class="choose">Find The Flight</li>
+								<li>Select Flight</li>
+								<li>Passenger</li>
+								<li>Payment</li>
+						</ul>
+						<div class="flights-list">
+								<div class="title-flights bg-default">
+										<h6><img src="images/icon/icon_flight.png" alt="">Bangkok - New York</h6>
+										<span>48 Trips</span>
+								</div>
+								<div class="flights-content bg-white">
+										<div class="table-flight">
+												<div class="title">
+														<div class="airlines">Airlines</div>
+														<div class="departure">Departure</div>
+														<div class="arrival">Arrival</div>
+														<div class="duration">Duration</div>
+														<div class="price">Price</div>
+												</div>
+												<div class="inner-content">
+														<div class="flight-item">
+																<div class="airlines">
+																		<div class="checkbox ver-1">
+																				<input type="radio" id="american1" name="choose-sticket">
+																				<span class="logo-airlines">
+																					<img src="images/logo-airlines/american-airlines.png" alt="">
+																				</span>
+																				<label for="american1">American Airlines</label>
+																		</div>
+
+																		<span class="airlines"></span>
+																</div>
+																<div class="departure">
+																		<span class="time"><strong>07:35</strong>AM</span>
+																		<span class="code">BKK</span>
+																</div>
+																<div class="arrival">
+																		<span class="time"><strong>08:00</strong>AM</span>
+																		<span class="code">JFK</span>
+																</div>
+																<div class="duration">
+																		<span class="time-line">8h 40m</span>
+																		<span class="option">Non-Stop</span>
+																</div>
+																<div class="price">
+																		1,453 <span class="unit">USD</span>
+																		<span class="more icon-dot-3"></span>
+																</div>
+														</div>
+														<div class="flight-detail ver-1">
+																<div class="detail">
+																		<h6>01. Flight details</h6>
+																		<div class="detail-content">
+																				<ul>
+																						<li>Airlines: <span>Vietnam Airline</span></li>
+																						<li>Class: <span>Economy class</span></li>
+																						<li>Aircraff: <span>VN517</span></li>
+																				</ul>
+																				<div class="flight-address">
+																						<div class="flight-from">
+																								<h4>21:00</h4>
+																								<p>Don Muang, Bangkok, Thailand</p>
+																						</div>
+																						<div class="flight-duration">
+																								<h6>2h 15m</h6>
+																								<p>Flight Duration</p>
+																						</div>
+																						<div class="flight-to">
+																								<h4>23:15</h4>
+																								<p>John F Kennedy, New York, United States</p>
+																						</div>
+																				</div>
+																		</div>
+																</div>
+																<div class="detail">
+																		<h6>02. Fare Details</h6>
+																		<table>
+																				<thead>
+																						<tr>
+																								<th>Passenger type</th>
+																								<th>Number tickets</th>
+																								<th>Price ticket</th>
+																								<th>Taxes</th>
+																								<th>Service charge</th>
+																								<th>Total price</th>
+																						</tr>
+																				</thead>
+																				<tbody>
+																						<tr>
+																								<td>Adults</td>
+																								<td>02</td>
+																								<td>$13,700</td>
+																								<td>$150</td>
+																								<td>$60</td>
+																								<td>$13,910</td>
+																						</tr>
+																						<tr>
+																								<td>Children</td>
+																								<td>02</td>
+																								<td>$13,700</td>
+																								<td>$150</td>
+																								<td>$60</td>
+																								<td>$13,910</td>
+																						</tr>
+																						<tr class="total">
+																								<td>Total money</td>
+																								<td></td>
+																								<td></td>
+																								<td></td>
+																								<td></td>
+																								<td class="price">$27,820</td>
+																						</tr>
+																				</tbody>
+																		</table>
+																</div>
+																<div class="detail">
+																		<h6>03. Baggage Information</h6>
+																		<table>
+																				<thead>
+																						<tr>
+																								<th>Baggage Type</th>
+																								<th>Check-In Baggage</th>
+																								<th>Hand Baggage</th>
+																						</tr>
+																				</thead>
+																				<tbody>
+																						<tr>
+																								<td>Adults</td>
+																								<td>2 Pc</td>
+																								<td>7 Kgs</td>
+																						</tr>
+																						<tr>
+																								<td>Children</td>
+																								<td>2 Pc</td>
+																								<td>7 Kgs</td>
+																						</tr>
+																				</tbody>
+																		</table>
+																</div>
+																<p>The baggage information is just for reference. Please Check with airline before check-in. For more information, visit Air India Website. * 1Pc = 23Kg</p>
+														</div>
+														<div class="flight-item">
+																<div class="airlines">
+																		<div class="checkbox ver-1">
+																				<input type="radio" id="singapore4" name="choose-sticket">
+																				<span class="logo-airlines"><img src="images/logo-airlines/singapore-airlines.png" alt=""></span>
+																				<label for="singapore4">Singapore Airlines</label>
+																		</div>
+																</div>
+																<div>
+																		<span class="time"><strong>07:35</strong>AM</span>
+																		<span class="code">BKK</span>
+																</div>
+																<div class="arrival">
+																		<span class="time"><strong>08:00</strong>AM</span>
+																		<span class="code">JFK</span>
+																</div>
+																<div class="duration">
+																		<span class="time-line">6h 25m</span>
+																		<span class="option">1 Stop</span>
+																</div>
+																<div class="price">
+																		1,453 <span class="unit">USD</span>
+																		<span class="more icon-dot-3"></span>
+																</div>
+														</div>
+
+
+														<div class="flight-detail ver-1">
+																<div class="detail">
+																		<h6>01. Flight details</h6>
+																		<div class="detail-content">
+																				<ul>
+																						<li>Airlines: <span>Vietnam Airline</span></li>
+																						<li>Class: <span>Economy class</span></li>
+																						<li>Aircraff: <span>VN517</span></li>
+																				</ul>
+																				<div class="flight-address">
+																						<div class="flight-from">
+																								<h4>21:00</h4>
+																								<p>Don Muang, Bangkok, Thailand</p>
+																						</div>
+																						<div class="flight-duration">
+																								<h6>2h 15m</h6>
+																								<p>Flight Duration</p>
+																						</div>
+																						<div class="flight-to">
+																								<h4>23:15</h4>
+																								<p>John F Kennedy, New York, United States</p>
+																						</div>
+																				</div>
+																		</div>
+																</div>
+																<div class="detail">
+																		<h6>02. Fare Details</h6>
+																		<table>
+																				<thead>
+																						<tr>
+																								<th>Passenger type</th>
+																								<th>Number tickets</th>
+																								<th>Price ticket</th>
+																								<th>Taxes</th>
+																								<th>Service charge</th>
+																								<th>Total price</th>
+																						</tr>
+																				</thead>
+																				<tbody>
+																						<tr>
+																								<td>Adults</td>
+																								<td>02</td>
+																								<td>$13,700</td>
+																								<td>$150</td>
+																								<td>$60</td>
+																								<td>$13,910</td>
+																						</tr>
+																						<tr>
+																								<td>Children</td>
+																								<td>02</td>
+																								<td>$13,700</td>
+																								<td>$150</td>
+																								<td>$60</td>
+																								<td>$13,910</td>
+																						</tr>
+																						<tr class="total">
+																								<td>Total money</td>
+																								<td></td>
+																								<td></td>
+																								<td></td>
+																								<td></td>
+																								<td class="price">$27,820</td>
+																						</tr>
+																				</tbody>
+																		</table>
+																</div>
+																<div class="detail">
+																		<h6>03. Baggage Information</h6>
+																		<table>
+																				<thead>
+																						<tr>
+																								<th>Baggage Type</th>
+																								<th>Check-In Baggage</th>
+																								<th>Hand Baggage</th>
+																						</tr>
+																				</thead>
+																				<tbody>
+																						<tr>
+																								<td>Adults</td>
+																								<td>2 Pc</td>
+																								<td>7 Kgs</td>
+																						</tr>
+																						<tr>
+																								<td>Children</td>
+																								<td>2 Pc</td>
+																								<td>7 Kgs</td>
+																						</tr>
+																				</tbody>
+																		</table>
+																</div>
+																<p>The baggage information is just for reference. Please Check with airline before check-in. For more information, visit Air India Website. * 1Pc = 23Kg</p>
+														</div>
+												</div>
+										</div>
+								</div>
+								<div class="button-next">
+										<a href="#" title="">NEXT</a>
+								</div>
+						</div>
+				</div>
+		</div>
+</div>
+</div>
+</section>

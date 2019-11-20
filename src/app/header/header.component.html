@@ -1,0 +1,60 @@
+<div class="layout-theme">
+        <header id="header" class="header-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="logo" class="logo">
+                                <a [routerLink] ="['/login']" title="AirLines" >
+                                  <img src="../../assets/images/logo.png" alt="">
+                                </a>
+                            </div>
+                             <div class="phone-number">
+                                 <span>CALL US:</span>
+                                 <a href="#" title="phone">0912 334 219</a>
+                             </div>
+                             <div class="navigation">
+                                <div class="mobile-menu">
+                                     <i class="icon-align-justify"></i>
+                                 </div>
+                                 <div id="main-menu" class="main-menu">
+                                  <ul class="menu-responsive">
+                                    <li class="active">
+                                      <a [routerLink] ="['/flights']" title="">HOME</a>
+                                    </li>
+                                    <li>
+                                      <a [routerLink] ="['/flights']" title="">FLIGHTS</a>
+                                      <ul class="dropdown">
+                                        <li><a [routerLink] ="['/flights']" title="">Search Flights</a></li>
+                                      </ul>
+                                         </li>
+                                         <li *ngIf="!isActiveUserSessionExists">
+                                            <a [routerLink] ="['/login']" title="SignIn" >SIGNIN
+                                                <span class="icon-users"> </span>
+                                            </a>
+                                             <ul class="dropdown">
+                                                 <li><a [routerLink] ="['/rigister']" title="">Rigister</a></li>
+                                             </ul>
+                                         </li>
+                                         <li *ngIf="isActiveUserSessionExists">
+
+                                               <div id="profileicon" class="profileicon">
+                                                   <a [routerLink] ="['/profile']" title="Profile" >
+                                                       <img src="../../assets/images/profile_gray.svg" alt="">
+                                                   </a>
+                                               </div>
+                                                <div class="profile">
+                                                    <span>{{activeUser.email}}</span>
+                                                </div>
+                                                 <ul class="dropdown">
+                                                     <li><a [routerLink] ="['/logout']" title="">Logout</a></li>
+                                                 </ul>
+                                        </li>
+
+                                     </ul>
+                                 </div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+             </header>
+             </div>

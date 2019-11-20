@@ -1,0 +1,120 @@
+[
+  {
+      "code": "HYD",   
+      "name": "Begumpet Airport",
+      "city": "Hyderabad",
+      "state": "Andhra Pradesh",
+      "country": "India"
+    },
+    {
+      "code": "BOM",   
+      "name": "Chhatrapati Shivaji International Airport",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "country": "India"
+     
+    },
+   {
+      "code": "VGR",
+      "name": "Vijag Airport",
+      "city": "Vijag",
+      "state": "Andra Pradesh",
+      "country": "India"
+    },
+     {
+      "code": "AMD",   
+      "name": "Sardar Vallabhbhai Patel International Airport",
+      "city": "Ahmedabad",
+      "state": "Gujarat",
+      "country": "India"
+    },
+    {
+      "code": "BAN",   
+      "name": "HAL International Airport",
+      "city": "Bangalore",
+      "state": "Karnataka",
+      "country": "India"
+    },
+   {
+      "code": "BJJ",
+      "name": "Altay Airport",
+      "city": "Bijing",
+      "state": "Xinjiang",
+      "country": "China"
+    },
+    {
+      "code": "AAX",    
+      "name": "Romeu Zuma Airport",
+      "city": "Shiyan",
+      "state": "Minas Gerais",
+      "country": "Brazil"
+    },
+    {
+      "code": "AAY",
+      "name": "Al Gaidah Airport",
+      "city": "Subesh",
+      "state": "Hadramawt",
+      "country": "Yemen"
+    },
+    {
+      "code": "MSK",   
+      "name": "Abakan",
+      "city": "Masko",
+      "state": "Khakasiya",
+      "country": "Russian Federation"
+    },
+    {
+      "code": "ABC",
+      "name": "Los Llanos",
+      "city": "Albacete",
+      "state": "Castilla-la Mancha",
+      "country": "Spain"
+    },
+   
+    {
+      "code": "ABE",
+      "name": "Lehigh Valley International Airport",
+      "city": "Allentown",
+      "state": "Pennsylvania",
+      "country": "United States"   
+    },
+    {
+      "code": "ABI",    
+      "name": "Abilene Regional Airport",
+      "city": "Abilene",
+      "state": "Texas",
+      "country": "United States"
+    }, 
+    
+    {
+      "code": "ABL",
+      "name": "Ambler Airport",
+      "city": "Kiana",
+      "state": "Alaska",
+      "country": "United States"    
+    },
+    {
+      "code": "ABR",   
+      "name": "Aberdeen Regional Airport",
+      "city": "Aberdeen",
+      "state": "South Dakota",
+      "country": "United States"    
+    }, 
+  
+    {
+      "code": "ABX",   
+      "name": "Albury Airport",
+      "city": "Albury",
+      "state": "New South Wales",
+      "country": "Australia"
+    },
+   
+    
+    {
+      "code": "TNM",
+      "name": "Teniente R. Marsh Airport",
+      "city": "Teniente R. Marsh",
+      "state": "",
+      "country": "Antarctica"
+    }
+  ]

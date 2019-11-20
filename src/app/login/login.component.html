@@ -1,0 +1,38 @@
+<section class="login-register-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-6">
+                <div class="login-form center">
+                    <h4>LOGIN</h4>
+                    <form (ngSubmit)="this.login()" method="get" accept-charset="utf-8">
+                       <div class="field-row login-email">
+                           <input type="email" name="email" [(ngModel)]="model.email" placeholder="E_mail">
+                       </div>
+                       <div class="field-row login-password">
+                           <input type="password" [(ngModel)]="model.password" name="password" placeholder="Password">
+                       </div>
+                       <div class="checkbox">
+                           <div class="remember-pass">
+                                <input type="checkbox"  name="remember-pass" id="remember-pass">
+                                <label for="remember-pass">Remember Me</label>
+                           </div>
+                           <div class="forget-pass">
+                                <a href="#" title="">Forget Password?</a>
+                           </div>
+                       </div>
+                       <div class="button-submit">
+                           <button type="submit">LOGIN</button>
+                       </div>
+                       <p>Don’t an account yet?  <a [routerLink] ="['/rigister']" title="">Rigister Now</a></p>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-3">
+
+            </div>
+        </div>
+    </div>
+</section>

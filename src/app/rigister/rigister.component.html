@@ -1,0 +1,42 @@
+<section class="login-register-area">
+    <div class="container">
+        <div class="row">
+            <div  class="col-md-3">
+
+            </div>
+            <div class="col-md-6">
+                <div class="login-form center">
+                    <h4>REGISTER</h4>
+                    <form  (ngSubmit)="this.register()" >
+                        <div class="field-row register-username">
+                           <input type="text" class="form-control" name="userName" [(ngModel)]="model.userName" placeholder="User name *" required>
+                       </div>
+                       <div class="field-row register-mobileNumber">
+                           <input type="text" class="form-control" name="mobileNumber" [(ngModel)]="model.mobileNumber" placeholder="Mobile Number *" required>
+                       </div>
+                       <div class="field-row register-email">
+                        <input type="email" class="form-control" name="email" [(ngModel)]="model.email" placeholder="E_mail Address *" required>
+                    </div>
+                       <div class="field-row register-password">
+                           <input type="password" class="form-control" name="password" [(ngModel)]="model.password" placeholder="Password *" required>
+                       </div>
+                       <div class="checkbox">
+                           <div class="agree-term left">
+                                <input type="checkbox" class="form-control" name="agree" [(ngModel)]="model.agree" id="agree-term">
+                                <label for="agree-term">I Agree to terms & Conditions</label>
+                           </div>
+                       </div>
+                       <div class="button-submit">
+                           <button type="submit">REGISTER</button>
+                       </div>
+
+                       <p>Already have an Account? Click have to   <a [routerLink] ="['/login']" title="">Login</a></p>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-3">
+
+            </div>
+        </div>
+    </div>
+</section>

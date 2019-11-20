@@ -1,0 +1,74 @@
+[
+  {
+      "code": "HYD",
+      "name": "Begumpet Airport",
+      "city": "Hyderabad",
+      "state": "Andhra Pradesh",
+      "country": "India"
+    },
+    {
+      "code": "BAN",
+      "name": "HAL International Airport",
+      "city": "Bangalore",
+      "state": "Karnataka",
+      "country": "India"
+    },
+    {
+      "code": "BOM",
+      "name": "Chhatrapati Shivaji International Airport",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "country": "India"
+
+    },
+   {
+      "code": "AGR",
+      "name": "Agra Airport",
+      "city": "Agra",
+      "state": "Uttar Pradesh",
+      "country": "India"
+    },
+     {
+      "code": "AMD",
+      "name": "Sardar Vallabhbhai Patel International Airport",
+      "city": "Ahmedabad",
+      "state": "Gujarat",
+      "country": "India"
+    },
+   {
+      "code": "AAT",
+      "name": "Altay Airport",
+      "city": "Altay",
+      "state": "Xinjiang",
+      "country": "China"
+    },
+    {
+      "code": "AAX",
+      "name": "Romeu Zuma Airport",
+      "city": "Arax\u00e1",
+      "state": "Minas Gerais",
+      "country": "Brazil"
+    },
+    {
+      "code": "AAY",
+      "name": "Al Gaidah Airport",
+      "city": "Al Ghaydah",
+      "state": "Hadramawt",
+      "country": "Yemen"
+    },
+
+    {
+      "code": "ABE",
+      "name": "Lehigh Valley International Airport",
+      "city": "Allentown",
+      "state": "Pennsylvania",
+      "country": "United States"
+    },
+    {
+      "code": "TNM",
+      "name": "Teniente R. Marsh Airport",
+      "city": "Teniente R. Marsh",
+      "state": "",
+      "country": "Antarctica"
+    }
+  ]
