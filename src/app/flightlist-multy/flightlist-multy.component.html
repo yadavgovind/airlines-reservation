@@ -17,25 +17,25 @@
 									<div class="field-row flex">
 										<div class="one-column">
 											<div class="input-form select-box">
-												<select [(ngModel)]="model.departItem" name="departItem">
+												<select [(ngModel)]="model.arrivingCity" name="model.arrivingCity">
 
-													<option *ngFor="let item of originList" [ngValue]="item">
-															<table class="align-lift">
-																	<tr>
-																		<i> {{item.city}}</i>
-																	</tr>
-															</table>
-													</option>
+													<option *ngFor="let cityObj of cities" value={{cityObj.id}} [ngValue]="arrivingCity">
+														<table class="align-lift">
+																<tr>
+																	<i> {{cityObj.city}}({{cityObj.code}})</i>
+																</tr>
+														</table>
+												</option>
 												</select>
 											</div>
 										</div>
 										<div class="one-column">
 											<div class="input-form select-box">
-												<select [(ngModel)]="model.arrivalItem" name="arrivalItem">
-													<option *ngFor="let item of originList" [ngValue]="item">
+												<select [(ngModel)]="model.departureCity" name="departureCity">
+													<option *ngFor="let deptcity of cities" value={{deptcity.id}} [ngValue]="model.departureCity">
 															<table class="align-lift">
 																	<tr>
-																		<i> {{item.city}}</i>
+																		<i> {{deptcity.city}}({{deptcity.code}})</i>
 																	</tr>
 															</table>
 													</option>
@@ -49,7 +49,7 @@
 												<div class="box-date">
 												<div class="input-form date form_date" data-date="" data-date-format="dd/mm/yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
 
-														<input size="16" type="text"  name="departdate" [(ngModel)]="model.departdate" placeholder="29/03/2018" readonly="">
+														<input size="16" type="text"  name="departdate" [(ngModel)]="model.journyDate" placeholder="29/03/2018" readonly="">
 														<span class="add-on"><i class="icon-remove"></i></span>
 														<span class="add-on"><i class="icon-th"></i></span>
 												</div>
@@ -60,7 +60,7 @@
 										<div class="one-column">
 											<div class="box-date">
 												<div class="input-form date form_date" data-date="" data-date-format="dd/mm/yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-													<input size="16" type="text"  name="returndate" [(ngModel)]="model.returndate" placeholder="29/03/2018" readonly="">
+													<input size="16" type="text"  name="returndate" [(ngModel)]="returndate" placeholder="29/03/2018" readonly="">
 													<span class="add-on"><i class="icon-remove"></i></span>
 													<span class="add-on"><i class="icon-th"></i></span>
 													</div>
@@ -102,7 +102,7 @@
 											<select [(ngModel)]="model.type" name="type">
 											<option value="Economy">Economy</option>
 											<option value="Business">Business</option>
-											<option value="First">First</option>
+										 
 												</select>
 												</div>
 										</div>
