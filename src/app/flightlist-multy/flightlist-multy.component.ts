@@ -12,6 +12,8 @@ import {SharedService} from '../services/shared-service';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService } from '../services/alert.service';
+import { City } from '../models/city';
+import { FlightFilter } from '../models/FlightFilter';
 
 
 
@@ -26,10 +28,11 @@ export class FlightlistMultyComponent implements OnInit {
   airports: Airport[];
   originList: Airport[];
   destinationList: Airport[];
+  cities:City[];
   departItem:Airport;
   arrivalItem:Airport;
-  model: any = {};
-
+  flightFilter: FlightFilter ;
+model:any={};
 
 
   ngOnInit() {
@@ -42,7 +45,9 @@ export class FlightlistMultyComponent implements OnInit {
     }else{
       this.router.navigate(['/login']);
     }
-
+    this.userService.getCity().subscribe(data=>{
+      this.cities=data;
+    })
   }
   constructor(private http: HttpClient, private router: Router,private userService: UserService,
   private alertService:AlertService, private _route: ActivatedRoute, private sharedService: SharedService) {
@@ -62,7 +67,8 @@ export class FlightlistMultyComponent implements OnInit {
 }
 
 searchFlights(){
-  console.log(this.model.type);
+  console.log("city name id "+this.model.arrivingCity);
+  
   this.userService.searchFlights(this.model)
       .subscribe(
           data => {

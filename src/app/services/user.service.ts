@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user';
 import { Flight } from '../models/flight';
 import { Observable } from 'rxjs';
+import { City } from '../models/city';
+import { FlightFilter } from '../models/FlightFilter';
 
 
 
@@ -22,10 +24,13 @@ export class UserService {
         return this.http.post<User>('http://localhost:8080/user/verifyUser', user);
     }
 
-    searchFlights(flight: Flight) {
-        return this.http.post<Flight>('http://localhost:8080/flight/getFlights', flight);
+    searchFlights(flightFilter: any) {
+        console.log("into service value is : "+flightFilter.arrivingCity)
+        return this.http.post<any>('http://localhost:8080/flight/getFlights', flightFilter);
     }
-
+getCity(){
+    return this.http.get<any>('http://localhost:8080/flight/cities');
+}
     // update(user: User):Observable<any> {
     //     return this.http.put('/api/users/' + user.id, user);
     //}
