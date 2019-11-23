@@ -32,6 +32,7 @@ export class FlightlistMultyComponent implements OnInit {
   departItem:Airport;
   arrivalItem:Airport;
   flightFilter: FlightFilter ;
+  flights:Flight[];
 model:any={};
 
 
@@ -72,6 +73,7 @@ searchFlights(){
   this.userService.searchFlights(this.model)
       .subscribe(
           data => {
+          this.flights=  data.arrivalFlightList;
             console.log("flight search sucess data:"+data);
 
         },

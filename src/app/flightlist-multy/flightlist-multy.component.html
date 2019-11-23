@@ -225,7 +225,7 @@
 										<h6><img src="images/icon/icon_flight.png" alt="">Bangkok - New York</h6>
 										<span>48 Trips</span>
 								</div>
-								<div class="flights-content bg-white">
+								<div class="flights-content bg-white" *ngFor="let flieght of flights">
 										<div class="table-flight">
 												<div class="title">
 														<div class="airlines">Airlines</div>
@@ -242,7 +242,7 @@
 																				<span class="logo-airlines">
 																					<img src="images/logo-airlines/american-airlines.png" alt="">
 																				</span>
-																				<label for="american1">American Airlines</label>
+																				<label for="american1">{{flieght.flightnumber}}</label>
 																		</div>
 
 																		<span class="airlines"></span>
