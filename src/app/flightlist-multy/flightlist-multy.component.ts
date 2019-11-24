@@ -101,33 +101,33 @@ this.selIndex=1;
   this.controls =   fomarry.controls;
 
 }
-// createItem(): FormGroup {
-//   return this.formBuilder.group({
-//     firstName: new FormControl('', [Validators.required]),
-//     lastName:  new FormControl('', [Validators.required]),
-//     email:     new FormControl('', [Validators.required]),
-//     phone:     new FormControl('', [Validators.required]),
-//     middleName:     new FormControl('', [Validators.required])
-//   });
-// }
-// addRow(){
-//   let fomarry=this.myform.get('passengers') as FormArray;
-//   if(this.myform.valid){
-//    fomarry.push(this.createItem());
-//   }
-//   else{
-//     Object.keys(fomarry.controls).forEach(group => {
-//      if(!fomarry.get(group).valid)
-//      this.validateAllFormFields(fomarry.get(group) as FormGroup);
-//   })
-//   }
-//   this.controls=fomarry.controls;
-// }
-// deleteRow(index){
-//   let fomarry=this.myform.get('passengers') as FormArray;
-//   fomarry.removeAt(index);
-//   this.controls=fomarry.controls;
-// }
+createItem(): FormGroup {
+  return this.formBuilder.group({
+    firstName: new FormControl('', [Validators.required]),
+    lastName:  new FormControl('', [Validators.required]),
+    email:     new FormControl('', [Validators.required]),
+    phone:     new FormControl('', [Validators.required]),
+    middleName:     new FormControl('', [Validators.required])
+  });
+}
+addRow(){
+  let fomarry=this.myform.get('passengers') as FormArray;
+  if(this.myform.valid){
+   fomarry.push(this.createItem());
+  }
+  else{
+    Object.keys(fomarry.controls).forEach(group => {
+     if(!fomarry.get(group).valid)
+     this.validateAllFormFields(fomarry.get(group) as FormGroup);
+  })
+  }
+  this.controls=fomarry.controls;
+}
+deleteRow(index){
+  let fomarry=this.myform.get('passengers') as FormArray;
+  fomarry.removeAt(index);
+  this.controls=fomarry.controls;
+}
 isFieldValid(field: string,error:string,form:FormGroup) {
   let validError=error==null?true:form.get(field).hasError(error);
   if(error!='required')
@@ -138,16 +138,16 @@ isFieldValid(field: string,error:string,form:FormGroup) {
   return (!form.get(field).valid && form.get(field).touched)&&validError;
 }
 
-// validateAllFormFields(formGroup: FormGroup) {
-//   Object.keys(formGroup.controls).forEach(field => {
-//     const control = formGroup.get(field);
-//     if (control instanceof FormControl) {
-//       control.markAsTouched({ onlySelf: true });
-//     } else if (control instanceof FormGroup) {
-//       this.validateAllFormFields(control);
-//     }
-//   });
-// }
+validateAllFormFields(formGroup: FormGroup) {
+  Object.keys(formGroup.controls).forEach(field => {
+    const control = formGroup.get(field);
+    if (control instanceof FormControl) {
+      control.markAsTouched({ onlySelf: true });
+    } else if (control instanceof FormGroup) {
+      this.validateAllFormFields(control);
+    }
+  });
+}
 firstNext(){
 this.selIndex+=1;
 }
