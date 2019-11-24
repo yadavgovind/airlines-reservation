@@ -136,7 +136,7 @@
 									<div class="duration">Duration</div>
 									<div class="price">Price</div>
 								</div>
-								<div class="inner-content">
+								<div class="inner-content"  *ngFor='let flight of flights'>
 									<div class="flight-item">
 										<div class="airlines">
 											<div class="checkbox ver-1">
@@ -144,25 +144,25 @@
 												<span class="logo-airlines">
 													<img src="images/logo-airlines/american-airlines.png" alt="">
 												</span>
-												<label for="american1">American Airlines</label>
+												<label for="american1">{{flight.operatingAirlines}}</label>
 											</div>
 
 											<span class="airlines"></span>
 										</div>
 										<div class="departure">
-											<span class="time"><strong>07:35</strong>AM</span>
-											<span class="code">BKK</span>
+											<span class="time"><strong>{{flight.depature_time}}</strong></span>
+											<span class="code">{{flight.departurecity}}</span>
 										</div>
 										<div class="arrival">
-											<span class="time"><strong>08:00</strong>AM</span>
-											<span class="code">JFK</span>
+											<span class="time"><strong>{{flight.arrival_time}}</strong></span>
+											<span class="code">{{flight.arrivalCity}}</span>
 										</div>
 										<div class="duration">
-											<span class="time-line">8h 40m</span>
+											<span class="time-line">{{flight.duration}}</span>
 											<span class="option">Non-Stop</span>
 										</div>
 										<div class="price">
-											1,453 <span class="unit">USD</span>
+											{{flight.economyprice}}<span class="unit">USD</span>
 											<span class="more icon-dot-3"></span>
 										</div>
 									</div>
@@ -171,22 +171,22 @@
 											<h6>01. Flight details</h6>
 											<div class="detail-content">
 												<ul>
-													<li>Airlines: <span>Vietnam Airline</span></li>
+													<li>Airlines: <span>{{flight.operatingAirlines}}</span></li>
 													<li>Class: <span>Economy class</span></li>
-													<li>Aircraff: <span>VN517</span></li>
+													<li>Aircraff: <span>{{flight.flightNumber}}</span></li>
 												</ul>
 												<div class="flight-address">
 													<div class="flight-from">
-														<h4>21:00</h4>
-														<p>Don Muang, Bangkok, Thailand</p>
+														<h4>{{flight.depature_time}}</h4>
+														<p>{{flight.departurecity}}</p>
 													</div>
 													<div class="flight-duration">
-														<h6>2h 15m</h6>
+														<h6>{{flight.duration}}</h6>
 														<p>Flight Duration</p>
 													</div>
 													<div class="flight-to">
-														<h4>23:15</h4>
-														<p>John F Kennedy, New York, United States</p>
+														<h4>{{flight.arrival_time}}</h4>
+														<p>{{flight.arrivalCity}}</p>
 													</div>
 												</div>
 											</div>
@@ -206,17 +206,17 @@
 												</thead>
 												<tbody>
 													<tr>
-														<td>Adults</td>
-														<td>02</td>
-														<td>$13,700</td>
+														<td>Adult</td>
+														<td>{{model.adultCount}}</td>
+														<td>${{flight.business_price}}</td>
 														<td>$150</td>
 														<td>$60</td>
 														<td>$13,910</td>
 													</tr>
 													<tr>
 														<td>Children</td>
-														<td>02</td>
-														<td>$13,700</td>
+														<td>{{model.adultCount}}</td>
+														<td>${{flight.business_price}}</td>
 														<td>$150</td>
 														<td>$60</td>
 														<td>$13,910</td>
@@ -245,13 +245,13 @@
 												<tbody>
 													<tr>
 														<td>Adults</td>
-														<td>2 Pc</td>
-														<td>7 Kgs</td>
+														<td>{{flight.checkin_baggage}}</td>
+														<td>{{flight.hand_baggage}}</td>
 													</tr>
 													<tr>
 														<td>Children</td>
-														<td>2 Pc</td>
-														<td>7 Kgs</td>
+														<td>{{flight.checkin_baggage}}</td>
+														<td>{{flight.hand_baggage}}</td>
 													</tr>
 												</tbody>
 											</table>
@@ -260,128 +260,10 @@
 											before check-in. For more information, visit Air India Website. * 1Pc = 23Kg
 										</p>
 									</div>
-									<div class="flight-item">
-										<div class="airlines">
-											<div class="checkbox ver-1">
-												<input type="radio" id="singapore4" name="choose-sticket">
-												<span class="logo-airlines"><img
-														src="images/logo-airlines/singapore-airlines.png" alt=""></span>
-												<label for="singapore4">Singapore Airlines</label>
-											</div>
-										</div>
-										<div>
-											<span class="time"><strong>07:35</strong>AM</span>
-											<span class="code">BKK</span>
-										</div>
-										<div class="arrival">
-											<span class="time"><strong>08:00</strong>AM</span>
-											<span class="code">JFK</span>
-										</div>
-										<div class="duration">
-											<span class="time-line">6h 25m</span>
-											<span class="option">1 Stop</span>
-										</div>
-										<div class="price">
-											1,453 <span class="unit">USD</span>
-											<span class="more icon-dot-3"></span>
-										</div>
-									</div>
+								 
 
 
-									<div class="flight-detail ver-1">
-										<div class="detail">
-											<h6>01. Flight details</h6>
-											<div class="detail-content">
-												<ul>
-													<li>Airlines: <span>Vietnam Airline</span></li>
-													<li>Class: <span>Economy class</span></li>
-													<li>Aircraff: <span>VN517</span></li>
-												</ul>
-												<div class="flight-address">
-													<div class="flight-from">
-														<h4>21:00</h4>
-														<p>Don Muang, Bangkok, Thailand</p>
-													</div>
-													<div class="flight-duration">
-														<h6>2h 15m</h6>
-														<p>Flight Duration</p>
-													</div>
-													<div class="flight-to">
-														<h4>23:15</h4>
-														<p>John F Kennedy, New York, United States</p>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="detail">
-											<h6>02. Fare Details</h6>
-											<table>
-												<thead>
-													<tr>
-														<th>Passenger type</th>
-														<th>Number tickets</th>
-														<th>Price ticket</th>
-														<th>Taxes</th>
-														<th>Service charge</th>
-														<th>Total price</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td>Adults</td>
-														<td>02</td>
-														<td>$13,700</td>
-														<td>$150</td>
-														<td>$60</td>
-														<td>$13,910</td>
-													</tr>
-													<tr>
-														<td>Children</td>
-														<td>02</td>
-														<td>$13,700</td>
-														<td>$150</td>
-														<td>$60</td>
-														<td>$13,910</td>
-													</tr>
-													<tr class="total">
-														<td>Total money</td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td class="price">$27,820</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<div class="detail">
-											<h6>03. Baggage Information</h6>
-											<table>
-												<thead>
-													<tr>
-														<th>Baggage Type</th>
-														<th>Check-In Baggage</th>
-														<th>Hand Baggage</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td>Adults</td>
-														<td>2 Pc</td>
-														<td>7 Kgs</td>
-													</tr>
-													<tr>
-														<td>Children</td>
-														<td>2 Pc</td>
-														<td>7 Kgs</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<p>The baggage information is just for reference. Please Check with airline
-											before check-in. For more information, visit Air India Website. * 1Pc = 23Kg
-										</p>
-									</div>
+									
 								</div>
 							</div>
 						</div>
@@ -668,18 +550,14 @@
 											<div class="form-group">
 												<input id="fname" type="text" placeholder="First name"
 													class="form-control" formControlName="firstName">
-												<app-field-error-display
-													[displayError]="isFieldValid('firstName','required',item)"
-													errorMsg="FirstName is required."></app-field-error-display>
+												
 											</div>
 										</div>
 										<div class="col-xs-12 col-sm-3 col-md-3">
 											<div class="form-group">
 												<input id="lname" type="text" placeholder="Last name"
 													class="form-control" formControlName="lastName">
-												<app-field-error-display
-													[displayError]="isFieldValid('lastName','required',item)"
-													errorMsg="LastName is required."></app-field-error-display>
+												
 											</div>
 										</div>
 										<div class="col-xs-12 col-sm-4 col-md-3">
