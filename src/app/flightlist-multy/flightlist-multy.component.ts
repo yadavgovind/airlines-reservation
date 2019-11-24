@@ -40,6 +40,7 @@ export class FlightlistMultyComponent implements OnInit {
   controls:any[]=[];
   formBuilder:FormBuilder=new FormBuilder();
   selIndex:number=1;
+
   ngOnInit() {
     if(localStorage.getItem('email')){
       this.getJSON().subscribe(data => {
@@ -53,7 +54,6 @@ export class FlightlistMultyComponent implements OnInit {
     this.userService.getCity().subscribe(data=>{
       this.cities=data;
     });
-    this.reinitFormArray();
   }
   constructor(private http: HttpClient, private router: Router,private userService: UserService,
   private alertService:AlertService, private _route: ActivatedRoute, private sharedService: SharedService) {
@@ -97,9 +97,19 @@ this.selIndex=1;
   this.myform = this.formBuilder.group({
     passengers: this.formBuilder.array([ this.createItem() ])
   });
+  console.log("form generated ");
   let fomarry   =   this.myform.get('passengers') as FormArray;
   this.controls =   fomarry.controls;
 
+}
+
+bookFlight(){
+  this.userService.bookFlight(this.myform).subscribe(data=>{
+console.log("success"+data);
+  },
+  error=>{
+    console.log("success"+error);
+  })
 }
 createItem(): FormGroup {
   return this.formBuilder.group({
@@ -107,7 +117,7 @@ createItem(): FormGroup {
     lastName:  new FormControl('', [Validators.required]),
     email:     new FormControl('', [Validators.required]),
     phone:     new FormControl('', [Validators.required]),
-    middleName:     new FormControl('', [Validators.required])
+    middleName: new FormControl('', [Validators.required])
   });
 }
 addRow(){
@@ -150,11 +160,15 @@ validateAllFormFields(formGroup: FormGroup) {
 }
 firstNext(){
 this.selIndex+=1;
+for(var i=0;i<2;i++){
+this.reinitFormArray();    
+}
 }
 secondNext(){
   this.selIndex+=1;
 }
 thirdNext(){
   this.selIndex+=1;
+  this.bookFlight();
 }
 }

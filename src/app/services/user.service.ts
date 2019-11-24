@@ -38,4 +38,8 @@ getCity(){
     delete(id: number) {
         return this.http.delete('/api/users/' + id);
     }
+
+    bookFlight(bookDetails: any){
+return this.http.post<any>('http://localhost:8080/reservation',bookDetails);
+    }
 }
