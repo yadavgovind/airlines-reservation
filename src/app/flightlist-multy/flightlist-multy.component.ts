@@ -54,6 +54,7 @@ export class FlightlistMultyComponent implements OnInit {
     this.userService.getCity().subscribe(data=>{
       this.cities=data;
     });
+    this.reinitFormArray();
   }
   constructor(private http: HttpClient, private router: Router,private userService: UserService,
   private alertService:AlertService, private _route: ActivatedRoute, private sharedService: SharedService) {
@@ -122,16 +123,8 @@ createItem(): FormGroup {
 }
 addRow(){
   let fomarry=this.myform.get('passengers') as FormArray;
-  if(this.myform.valid){
    fomarry.push(this.createItem());
-  }
-  else{
-    Object.keys(fomarry.controls).forEach(group => {
-     if(!fomarry.get(group).valid)
-     this.validateAllFormFields(fomarry.get(group) as FormGroup);
-  })
-  }
-  this.controls=fomarry.controls;
+   this.controls=fomarry.controls;
 }
 deleteRow(index){
   let fomarry=this.myform.get('passengers') as FormArray;
@@ -160,8 +153,8 @@ validateAllFormFields(formGroup: FormGroup) {
 }
 firstNext(){
 this.selIndex+=1;
-for(var i=0;i<2;i++){
-this.reinitFormArray();    
+for(var i=0;i<this.model.adultCount-1;i++){
+this.addRow();    
 }
 }
 secondNext(){
