@@ -14,6 +14,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService } from '../services/alert.service';
 import { City } from '../models/city';
 import { FlightFilter } from '../models/FlightFilter';
+import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 
 
 
@@ -32,10 +33,12 @@ export class FlightlistMultyComponent implements OnInit {
   departItem:Airport;
   arrivalItem:Airport;
   flightFilter: FlightFilter ;
-  flights:Flight[];
-model:any={};
-
-
+  model:any={};
+  myform:FormGroup;
+  passengers:any[]=[];
+  controls:any[]=[];
+  formBuilder:FormBuilder=new FormBuilder();
+  selIndex:number=1;
   ngOnInit() {
     if(localStorage.getItem('email')){
       this.getJSON().subscribe(data => {
@@ -48,7 +51,8 @@ model:any={};
     }
     this.userService.getCity().subscribe(data=>{
       this.cities=data;
-    })
+    });
+    this.reinitFormArray();
   }
   constructor(private http: HttpClient, private router: Router,private userService: UserService,
   private alertService:AlertService, private _route: ActivatedRoute, private sharedService: SharedService) {
@@ -68,12 +72,10 @@ model:any={};
 }
 
 searchFlights(){
-  console.log("city name id "+this.model.arrivingCity);
-  
+this.selIndex=1;
   this.userService.searchFlights(this.model)
       .subscribe(
           data => {
-          this.flights=  data.arrivalFlightList;
             console.log("flight search sucess data:"+data);
 
         },
@@ -88,4 +90,69 @@ searchFlights(){
     this.roundtripenabled=false;
   }
  }
+
+ reinitFormArray(){
+  this.myform = this.formBuilder.group({
+    passengers: this.formBuilder.array([ this.createItem() ])
+  });
+  let fomarry   =   this.myform.get('passengers') as FormArray;
+  this.controls =   fomarry.controls;
+
+}
+createItem(): FormGroup {
+  return this.formBuilder.group({
+    firstName: new FormControl('', [Validators.required]),
+    lastName:  new FormControl('', [Validators.required]),
+    email:     new FormControl('', [Validators.required]),
+    phone:     new FormControl('', [Validators.required]),
+    middleName:     new FormControl('', [Validators.required])
+  });
+}
+addRow(){
+  let fomarry=this.myform.get('passengers') as FormArray;
+  if(this.myform.valid){
+   fomarry.push(this.createItem());
+  }
+  else{
+    Object.keys(fomarry.controls).forEach(group => {
+     if(!fomarry.get(group).valid)
+     this.validateAllFormFields(fomarry.get(group) as FormGroup);
+  })
+  }
+  this.controls=fomarry.controls;
+}
+deleteRow(index){
+  let fomarry=this.myform.get('passengers') as FormArray;
+  fomarry.removeAt(index);
+  this.controls=fomarry.controls;
+}
+isFieldValid(field: string,error:string,form:FormGroup) {
+  let validError=error==null?true:form.get(field).hasError(error);
+  if(error!='required')
+  {
+    if(form.get(field).hasError('required') && form.get(field).touched)
+      return false;
+  }
+  return (!form.get(field).valid && form.get(field).touched)&&validError;
+}
+
+validateAllFormFields(formGroup: FormGroup) {
+  Object.keys(formGroup.controls).forEach(field => {
+    const control = formGroup.get(field);
+    if (control instanceof FormControl) {
+      control.markAsTouched({ onlySelf: true });
+    } else if (control instanceof FormGroup) {
+      this.validateAllFormFields(control);
+    }
+  });
+}
+firstNext(){
+this.selIndex+=1;
+}
+secondNext(){
+  this.selIndex+=1;
+}
+thirdNext(){
+  this.selIndex+=1;
+}
 }
