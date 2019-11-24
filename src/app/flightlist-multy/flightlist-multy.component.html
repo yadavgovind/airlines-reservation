@@ -124,7 +124,7 @@
 					</ul>
 					<div class="flights-list" [hidden]="selIndex!=1">
 						<div class="title-flights bg-default">
-							<h6><img src="images/icon/icon_flight.png" alt="">Bangkok - New York</h6>
+							<h6><img src="images/icon/icon_flight.png" alt="">{{model.arrivalCity}} - {{model.departureCity}}</h6>
 							<span>48 Trips</span>
 						</div>
 						<div class="flights-content bg-white">
@@ -140,7 +140,7 @@
 									<div class="flight-item">
 										<div class="airlines">
 											<div class="checkbox ver-1">
-												<input type="radio" id="american1" name="choose-sticket">
+												<input type="radio" id="american" name="choose-sticket">
 												<span class="logo-airlines">
 													<img src="images/logo-airlines/american-airlines.png" alt="">
 												</span>
@@ -151,11 +151,11 @@
 										</div>
 										<div class="departure">
 											<span class="time"><strong>{{flight.depature_time}}</strong></span>
-											<span class="code">{{flight.departurecity}}</span>
+											<span class="code">{{flight.departurecity.code}}</span>
 										</div>
 										<div class="arrival">
 											<span class="time"><strong>{{flight.arrival_time}}</strong></span>
-											<span class="code">{{flight.arrivalCity}}</span>
+											<span class="code">{{flight.arrivalCity.code}}</span>
 										</div>
 										<div class="duration">
 											<span class="time-line">{{flight.duration}}</span>
@@ -172,13 +172,13 @@
 											<div class="detail-content">
 												<ul>
 													<li>Airlines: <span>{{flight.operatingAirlines}}</span></li>
-													<li>Class: <span>Economy class</span></li>
+													<li>Class: <span>{{model.type}}</span></li>
 													<li>Aircraff: <span>{{flight.flightNumber}}</span></li>
 												</ul>
 												<div class="flight-address">
 													<div class="flight-from">
 														<h4>{{flight.depature_time}}</h4>
-														<p>{{flight.departurecity}}</p>
+														<p>{{flight.departurecity.city}}</p>
 													</div>
 													<div class="flight-duration">
 														<h6>{{flight.duration}}</h6>
@@ -186,7 +186,7 @@
 													</div>
 													<div class="flight-to">
 														<h4>{{flight.arrival_time}}</h4>
-														<p>{{flight.arrivalCity}}</p>
+														<p>{{flight.arrivalCity.city}}</p>
 													</div>
 												</div>
 											</div>
