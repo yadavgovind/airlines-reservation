@@ -1,0 +1,7 @@
+<div *ngIf="displayError" >
+  
+  <span class="sr-only">(error)</span>
+  <div class="error-msg" [ngStyle]="{'background-color':backFade ? 'rgba(0,0,0,0.4)' : '' }">
+    {{ errorMsg }}
+  </div>
+</div>
