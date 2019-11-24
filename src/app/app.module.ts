@@ -10,11 +10,12 @@ import { RigisterComponent } from './rigister/rigister.component';
 import { AboutComponent } from './about/about.component';
 import { FlightlistMultyComponent } from './flightlist-multy/flightlist-multy.component';
 import { CardPaymentComponent } from './card-payment/card-payment.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
 import { UserService } from './services/user.service';
 import { HttpClientModule ,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AlertService } from './services/alert.service';
+import { FieldErrorDisplayComponent } from './field-error-display/field-error-display.component';
 
 const appRoutes: Routes = [
   {
@@ -46,6 +47,7 @@ const appRoutes: Routes = [
     AboutComponent,
     FlightlistMultyComponent,
     CardPaymentComponent,
+    FieldErrorDisplayComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +57,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes, { useHash: true}
     ),
+    ReactiveFormsModule
   ],
   providers: [UserService,AlertService],
   bootstrap: [AppComponent]
