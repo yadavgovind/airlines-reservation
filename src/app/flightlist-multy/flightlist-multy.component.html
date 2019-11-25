@@ -369,18 +369,18 @@
 													<tr>
 														<td>Adult</td>
 														<td>{{model.adultCount}}</td>
-														<td>$({{flight.business_price}}*{{flight.adultCount}})</td>
+														<td>${{selectedFlight.business_price*model.adultCount}}</td>
 														<td>$150</td>
 														<td>$60</td>
-														<td>$({{flight.business_price*flight.childCount+150+60}})</td>
+														<td>$({{selectedFlight.business_price*model.childCount+150+60}})</td>
 													</tr>
 													<tr>
 														<td>Children</td>
 														<td>{{model.childCount}}</td>
-														<td>$({{flight.business_price*flight.childCount}})</td>
+														<td>${{selectedFlight.business_price * model.childCount}}</td>
 														<td>$150</td>
 														<td>$60</td>
-														<td>$({{flight.business_price*flight.childCount+150+60}})</td>
+														<td>${{selectedFlight.business_price*model.childCount+150+60}}</td>
 													</tr>
 													<tr class="total">
 														<td>Total money</td>
@@ -388,7 +388,7 @@
 														<td></td>
 														<td></td>
 														<td></td>
-														<td class="price">${{flight.business_price*model.childCount+ flight.business_price*model.adultCount+150+150+60+60}}</td>
+														<td class="price">${{selectedFlight.business_price*model.childCount+ selectedFlight.business_price*model.adultCount+150+150+60+60}}</td>
 													</tr>
 												</tbody>
 											</table>
@@ -406,13 +406,13 @@
 												<tbody>
 													<tr>
 														<td>Adults</td>
-														<td>{{flight.checkin_baggage}}</td>
-														<td>{{flight.hand_baggage}}</td>
+														<td>{{selectedFlight.checkin_baggage}}</td>
+														<td>{{selectedFlight.hand_baggage}}</td>
 													</tr>
 													<tr>
 														<td>Children</td>
-														<td>{{flight.checkin_baggage}}</td>
-														<td>{{flight.hand_baggage}}</td>
+														<td>{{selectedFlight.checkin_baggage}}</td>
+														<td>{{selectedFlight.hand_baggage}}</td>
 													</tr>
 												</tbody>
 											</table>
@@ -467,6 +467,7 @@
 
 											</div>
 										</div>
+										
 									</div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-12 error-msg"><span>{{success}}</span></div>

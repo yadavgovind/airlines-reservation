@@ -16,6 +16,7 @@ import { City } from '../models/city';
 import { FlightFilter } from '../models/FlightFilter';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import { $ } from 'protractor';
+import { Booking } from '../models/Booking';
 
 
 
@@ -39,13 +40,19 @@ export class FlightlistMultyComponent implements OnInit {
   myform:FormGroup;
   passengers:any[]=[];
   controls:any[]=[];
-  dummyBooking:any[]=[{"isEconomy":"true",
+  booingList:Booking[];
+  dummyList:any[];
+  price:number;
+  type:string;
+  dummyBooking:any[]=[{ 
   "flightId":1,
   "price":5000,
   "firstName":"govind",
   "email":"urgovind7@gmail.com",
   "lastName":"Yadav",
-  "phone":"7842413120"
+  "phone":"7842413120",
+  "type":"economy",
+
   }];
   formBuilder:FormBuilder=new FormBuilder();
   selIndex:number=1;
@@ -115,8 +122,24 @@ this.selIndex=1;
 }
 
 bookFlight(){
- alert( this.myform.value);
-  this.userService.bookFlight(this.myform.value).subscribe(data=>{
+ 
+ this.dummyList = this.myform.value;
+  
+// let booking = new Booking();
+// booking.firstName = this.dummyList[0].firstName;
+// booking.lastName = this.dummyList[0].lastName; 
+// this.booingList.push.apply(booking);
+// this.booingList[0]=booking;
+if(this.model.type==='economy'){
+
+  this.price=this.selectedFlight.economyprice*(this.model.adultCount+this.model.childCount);
+}else{
+  this.price=this.selectedFlight.business_price*(this.model.adultCount+this.model.childCount);
+}
+ console.log("dddddd "+this.dummyList.length);
+
+  
+  this.userService.bookFlight(this.booingList).subscribe(data=>{
 console.log("success"+data);
   },
   error=>{
@@ -127,9 +150,10 @@ createItem(): FormGroup {
   return this.formBuilder.group({
     firstName: new FormControl('', [Validators.required]),
     lastName:  new FormControl('', [Validators.required]),
+    middleName: new FormControl('', [Validators.required]),
     email:     new FormControl('', [Validators.required]),
-    phone:     new FormControl('', [Validators.required]),
-    middleName: new FormControl('', [Validators.required])
+    phone:     new FormControl('', [Validators.required])
+  
   });
 }
 addRow(){
