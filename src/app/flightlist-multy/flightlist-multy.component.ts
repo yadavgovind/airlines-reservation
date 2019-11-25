@@ -15,6 +15,7 @@ import { AlertService } from '../services/alert.service';
 import { City } from '../models/city';
 import { FlightFilter } from '../models/FlightFilter';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
+import { $ } from 'protractor';
 
 
 
@@ -38,8 +39,17 @@ export class FlightlistMultyComponent implements OnInit {
   myform:FormGroup;
   passengers:any[]=[];
   controls:any[]=[];
+  dummyBooking:any[]=[{"isEconomy":"true",
+  "flightId":1,
+  "price":5000,
+  "firstName":"govind",
+  "email":"urgovind7@gmail.com",
+  "lastName":"Yadav",
+  "phone":"7842413120"
+  }];
   formBuilder:FormBuilder=new FormBuilder();
   selIndex:number=1;
+  selectedFlight:Flight;
 
   ngOnInit() {
     if(localStorage.getItem('email')){
@@ -105,7 +115,8 @@ this.selIndex=1;
 }
 
 bookFlight(){
-  this.userService.bookFlight(this.myform).subscribe(data=>{
+ alert( this.myform.value);
+  this.userService.bookFlight(this.myform.value).subscribe(data=>{
 console.log("success"+data);
   },
   error=>{
@@ -151,13 +162,20 @@ validateAllFormFields(formGroup: FormGroup) {
     }
   });
 }
-firstNext(){
+firstNext() {
+  this.flights.forEach(flight => {
+if ( flight.flightnumber === '123') {
+  this.selectedFlight = flight;
+}
+  });
+  
 this.selIndex+=1;
 for(var i=0;i<this.model.adultCount-1;i++){
 this.addRow();    
 }
 }
 secondNext(){
+
   this.selIndex+=1;
 }
 thirdNext(){
