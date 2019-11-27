@@ -38,7 +38,7 @@ export class FlightlistMultyComponent implements OnInit {
   flights:Flight[];
   model: any={};
   myform:FormGroup;
-  passengers1:any[]=[];
+  passengers:any[]=[];
   controls:any[]=[];
   bookingList:Booking[]=[];
   dummyList:any[];
