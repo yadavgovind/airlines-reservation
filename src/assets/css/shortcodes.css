@@ -2043,7 +2043,7 @@ form .checkbox.ver-1 a i {
 
 .flights-list .flights-content .table-flight .inner-content div input {
 	position: absolute;
-	opacity: 0;
+	
 }
 
 .flights-list .flights-content .table-flight .inner-content div label {
@@ -2067,13 +2067,7 @@ form .checkbox.ver-1 a i {
 	border: 2px solid #dfdfdf;
 }
 
-.flights-list .flights-content .table-flight .inner-content div input[type="radio"]:checked + .logo-airlines:before {
-	content: '\e899';
-	font-family: 'fontello';
-	color: #00baf3;
-	font-size: 21px;
-	border: none;
-}
+
 
 /* Flight Detail */
 .flight-detail {
@@ -2431,33 +2425,13 @@ form .checkbox.ver-1 a i {
 	color: #999999;
 }
 
-.radio label:before {
-	content: '';
-	position: absolute;
-	height: 14px;
-	width: 14px;
-	top: 4px;
-	left: 0;
-	border-radius: 50%;
-	border: 2px solid #dfdfdf;
-}
 
-.radio label:after {
-	content: '';
-	position: absolute;
-	top: 8px;
-	left: 4px;
-	height: 6px;
-	width: 6px;
-	border-radius: 50%;
-	background-color: #dfdfdf;
-}
 
-.radio input[type="radio"] {
-	opacity: 0;
-	position: absolute;
-}
 
+
+input[type="radio"] {
+position: relative !important;
+}
 .radio input[type="radio"]:checked + label:after {
 	background-color: #00baf3;
 }
