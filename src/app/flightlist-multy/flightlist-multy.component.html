@@ -88,7 +88,21 @@
 														</select>
 													</div>
 												</div>
-
+												<div class="one-column">
+													<div class="input-form select-box">
+														<select [(ngModel)]="model.childCount" name="childCount">
+															<option value="1">01 Child</option>
+															<option value="2">02 Childs</option>
+															<option value="3">03 Childs</option>
+															<option value="4">04 Childs</option>
+															<option value="5">05 Childs</option>
+															<option value="6">06 Childs</option>
+															<option value="7">07 Childs</option>
+															<option value="8">08 Childs</option>
+															<option value="9">09 Childs</option>
+														</select>
+													</div>
+												</div>
 												<div class="one-column">
 													<div class="input-form select-box">
 														<select [(ngModel)]="model.type" name="type">
@@ -140,7 +154,7 @@
 									<div class="flight-item">
 										<div class="airlines">
 											<div class="checkbox ver-1">
-												<input type="radio" id="american" name="choose-sticket">
+												<input type="radio" id="american123" name="choose-sticket" value="3">
 												<span class="logo-airlines">
 													<img src="images/logo-airlines/american-airlines.png" alt="">
 												</span>
@@ -209,17 +223,17 @@
 														<td>Adult</td>
 														<td>{{model.adultCount}}</td>
 														<td>${{flight.business_price}}</td>
-														<td>$150</td>
+														<td>${{flight.business_price*model.adultCount}}</td>
 														<td>$60</td>
-														<td>$13,910</td>
+														<td>${{flight.business_price*model.adultCount+60}}</td>
 													</tr>
 													<tr>
 														<td>Children</td>
-														<td>{{model.adultCount}}</td>
+														<td>{{model.childCount}}</td>
 														<td>${{flight.business_price}}</td>
-														<td>$150</td>
+														<td>${{flight.business_price*model.childCount}}</td>
 														<td>$60</td>
-														<td>$13,910</td>
+														<td>${{flight.business_price*model.childCount+60}}</td>
 													</tr>
 													<tr class="total">
 														<td>Total money</td>
@@ -227,7 +241,7 @@
 														<td></td>
 														<td></td>
 														<td></td>
-														<td class="price">$27,820</td>
+														<td class="price">${{flight.business_price*model.childCount+ flight.business_price*model.adultCount+60+60}}</td>
 													</tr>
 												</tbody>
 											</table>
@@ -285,250 +299,129 @@
 										</div>
 										<div class="inner-content">
 											<div class="flight-item">
-												<div class="airlines">
-													<div class="checkbox ver-1">
-														<input type="radio" id="american1" name="choose-sticket">
-														<span class="logo-airlines">
-															<img src="images/logo-airlines/american-airlines.png" alt="">
-														</span>
-														<label for="american1">American Airlines</label>
-													</div>
-		
-													<span class="airlines"></span>
-												</div>
-												<div class="departure">
-													<span class="time"><strong>07:35</strong>AM</span>
-													<span class="code">BKK</span>
-												</div>
-												<div class="arrival">
-													<span class="time"><strong>08:00</strong>AM</span>
-													<span class="code">JFK</span>
-												</div>
-												<div class="duration">
-													<span class="time-line">8h 40m</span>
-													<span class="option">Non-Stop</span>
-												</div>
-												<div class="price">
-													1,453 <span class="unit">USD</span>
-													<span class="more icon-dot-3"></span>
-												</div>
+										<div class="airlines">
+											<div class="checkbox ver-1">
+												<input type="radio" id="american123" name="choose-sticket" value="3">
+												<span class="logo-airlines">
+													<img src="images/logo-airlines/american-airlines.png" alt="">
+												</span>
+												<label for="american1">{{selectedFlight.operatingAirlines}}</label>
 											</div>
-											<div class="flight-detail ver-1">
-												<div class="detail">
-													<h6>01. Flight details</h6>
-													<div class="detail-content">
-														<ul>
-															<li>Airlines: <span>Vietnam Airline</span></li>
-															<li>Class: <span>Economy class</span></li>
-															<li>Aircraff: <span>VN517</span></li>
-														</ul>
-														<div class="flight-address">
-															<div class="flight-from">
-																<h4>21:00</h4>
-																<p>Don Muang, Bangkok, Thailand</p>
-															</div>
-															<div class="flight-duration">
-																<h6>2h 15m</h6>
-																<p>Flight Duration</p>
-															</div>
-															<div class="flight-to">
-																<h4>23:15</h4>
-																<p>John F Kennedy, New York, United States</p>
-															</div>
-														</div>
+
+											<span class="airlines"></span>
+										</div>
+										<div class="departure">
+											<span class="time"><strong>{{selectedFlight.depature_time}}</strong></span>
+											<span class="code">{{selectedFlight.departurecity.code}}</span>
+										</div>
+										<div class="arrival">
+											<span class="time"><strong>{{selectedFlight.arrival_time}}</strong></span>
+											<span class="code">{{selectedFlight.arrivalCity.code}}</span>
+										</div>
+										<div class="duration">
+											<span class="time-line">{{selectedFlight.duration}}</span>
+											<span class="option">Non-Stop</span>
+										</div>
+										<div class="price">
+											{{selectedFlight.economyprice}}<span class="unit">USD</span>
+											<span class="more icon-dot-3"></span>
+										</div>
+									</div>
+									<div class="flight-detail ver-1">
+										<div class="detail">
+											<h6>01. Flight details</h6>
+											<div class="detail-content">
+												<ul>
+													<li>Airlines: <span>{{selectedFlight.operatingAirlines}}</span></li>
+													<li>Class: <span>{{model.type}}</span></li>
+													<li>Aircraff: <span>{{selectedFlight.flightNumber}}</span></li>
+												</ul>
+												<div class="flight-address">
+													<div class="flight-from">
+														<h4>{{selectedFlight.depature_time}}</h4>
+														<p>{{selectedFlight.departurecity.city}}</p>
+													</div>
+													<div class="flight-duration">
+														<h6>{{selectedFlight.duration}}</h6>
+														<p>Flight Duration</p>
+													</div>
+													<div class="flight-to">
+														<h4>{{selectedFlight.arrival_time}}</h4>
+														<p>{{selectedFlight.arrivalCity.city}}</p>
 													</div>
 												</div>
-												<div class="detail">
-													<h6>02. Fare Details</h6>
-													<table>
-														<thead>
-															<tr>
-																<th>Passenger type</th>
-																<th>Number tickets</th>
-																<th>Price ticket</th>
-																<th>Taxes</th>
-																<th>Service charge</th>
-																<th>Total price</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr>
-																<td>Adults</td>
-																<td>02</td>
-																<td>$13,700</td>
-																<td>$150</td>
-																<td>$60</td>
-																<td>$13,910</td>
-															</tr>
-															<tr>
-																<td>Children</td>
-																<td>02</td>
-																<td>$13,700</td>
-																<td>$150</td>
-																<td>$60</td>
-																<td>$13,910</td>
-															</tr>
-															<tr class="total">
-																<td>Total money</td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td class="price">$27,820</td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
-												<div class="detail">
-													<h6>03. Baggage Information</h6>
-													<table>
-														<thead>
-															<tr>
-																<th>Baggage Type</th>
-																<th>Check-In Baggage</th>
-																<th>Hand Baggage</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr>
-																<td>Adults</td>
-																<td>2 Pc</td>
-																<td>7 Kgs</td>
-															</tr>
-															<tr>
-																<td>Children</td>
-																<td>2 Pc</td>
-																<td>7 Kgs</td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
-												<p>The baggage information is just for reference. Please Check with airline
-													before check-in. For more information, visit Air India Website. * 1Pc = 23Kg
-												</p>
 											</div>
-											<div class="flight-item">
-												<div class="airlines">
-													<div class="checkbox ver-1">
-														<input type="radio" id="singapore4" name="choose-sticket">
-														<span class="logo-airlines"><img
-																src="images/logo-airlines/singapore-airlines.png" alt=""></span>
-														<label for="singapore4">Singapore Airlines</label>
-													</div>
-												</div>
-												<div>
-													<span class="time"><strong>07:35</strong>AM</span>
-													<span class="code">BKK</span>
-												</div>
-												<div class="arrival">
-													<span class="time"><strong>08:00</strong>AM</span>
-													<span class="code">JFK</span>
-												</div>
-												<div class="duration">
-													<span class="time-line">6h 25m</span>
-													<span class="option">1 Stop</span>
-												</div>
-												<div class="price">
-													1,453 <span class="unit">USD</span>
-													<span class="more icon-dot-3"></span>
-												</div>
-											</div>
-		
-		
-											<div class="flight-detail ver-1">
-												<div class="detail">
-													<h6>01. Flight details</h6>
-													<div class="detail-content">
-														<ul>
-															<li>Airlines: <span>Vietnam Airline</span></li>
-															<li>Class: <span>Economy class</span></li>
-															<li>Aircraff: <span>VN517</span></li>
-														</ul>
-														<div class="flight-address">
-															<div class="flight-from">
-																<h4>21:00</h4>
-																<p>Don Muang, Bangkok, Thailand</p>
-															</div>
-															<div class="flight-duration">
-																<h6>2h 15m</h6>
-																<p>Flight Duration</p>
-															</div>
-															<div class="flight-to">
-																<h4>23:15</h4>
-																<p>John F Kennedy, New York, United States</p>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="detail">
-													<h6>02. Fare Details</h6>
-													<table>
-														<thead>
-															<tr>
-																<th>Passenger type</th>
-																<th>Number tickets</th>
-																<th>Price ticket</th>
-																<th>Taxes</th>
-																<th>Service charge</th>
-																<th>Total price</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr>
-																<td>Adults</td>
-																<td>02</td>
-																<td>$13,700</td>
-																<td>$150</td>
-																<td>$60</td>
-																<td>$13,910</td>
-															</tr>
-															<tr>
-																<td>Children</td>
-																<td>02</td>
-																<td>$13,700</td>
-																<td>$150</td>
-																<td>$60</td>
-																<td>$13,910</td>
-															</tr>
-															<tr class="total">
-																<td>Total money</td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td class="price">$27,820</td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
-												<div class="detail">
-													<h6>03. Baggage Information</h6>
-													<table>
-														<thead>
-															<tr>
-																<th>Baggage Type</th>
-																<th>Check-In Baggage</th>
-																<th>Hand Baggage</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr>
-																<td>Adults</td>
-																<td>2 Pc</td>
-																<td>7 Kgs</td>
-															</tr>
-															<tr>
-																<td>Children</td>
-																<td>2 Pc</td>
-																<td>7 Kgs</td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
-												<p>The baggage information is just for reference. Please Check with airline
-													before check-in. For more information, visit Air India Website. * 1Pc = 23Kg
-												</p>
-											</div>
+										</div>
+										<div class="detail">
+											<h6>02. Fare Details</h6>
+											<table>
+												<thead>
+													<tr>
+														<th>Passenger type</th>
+														<th>Number tickets</th>
+														<th>Price ticket</th>
+														<th>Taxes</th>
+														<th>Service charge</th>
+														<th>Total price</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>Adult</td>
+														<td>{{model.adultCount}}</td>
+														<td>${{selectedFlight.business_price*model.adultCount}}</td>
+														<td>$150</td>
+														<td>$60</td>
+														<td>$({{selectedFlight.business_price*model.childCount+150+60}})</td>
+													</tr>
+													<tr>
+														<td>Children</td>
+														<td>{{model.childCount}}</td>
+														<td>${{selectedFlight.business_price * model.childCount}}</td>
+														<td>$150</td>
+														<td>$60</td>
+														<td>${{selectedFlight.business_price*model.childCount+150+60}}</td>
+													</tr>
+													<tr class="total">
+														<td>Total money</td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td class="price">${{selectedFlight.business_price*model.childCount+ selectedFlight.business_price*model.adultCount+150+150+60+60}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<div class="detail">
+											<h6>03. Baggage Information</h6>
+											<table>
+												<thead>
+													<tr>
+														<th>Baggage Type</th>
+														<th>Check-In Baggage</th>
+														<th>Hand Baggage</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>Adults</td>
+														<td>{{selectedFlight.checkin_baggage}}</td>
+														<td>{{selectedFlight.hand_baggage}}</td>
+													</tr>
+													<tr>
+														<td>Children</td>
+														<td>{{selectedFlight.checkin_baggage}}</td>
+														<td>{{selectedFlight.hand_baggage}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<p>The baggage information is just for reference. Please Check with airline
+											before check-in. For more information, visit Air India Website. * 1Pc = 23Kg
+										</p>
+									</div>
+						
 										</div>
 									</div>
 								</div>
@@ -574,6 +467,7 @@
 
 											</div>
 										</div>
+										
 									</div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-12 error-msg"><span>{{success}}</span></div>

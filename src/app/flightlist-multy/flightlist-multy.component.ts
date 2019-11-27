@@ -15,6 +15,8 @@ import { AlertService } from '../services/alert.service';
 import { City } from '../models/city';
 import { FlightFilter } from '../models/FlightFilter';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
+import { $ } from 'protractor';
+import { Booking } from '../models/Booking';
 
 
 
@@ -34,12 +36,28 @@ export class FlightlistMultyComponent implements OnInit {
   arrivalItem:Airport;
   flightFilter: FlightFilter ;
   flights:Flight[];
-  model:any={};
+  model: any={};
   myform:FormGroup;
   passengers:any[]=[];
   controls:any[]=[];
+  bookingList:Booking[]=[];
+  dummyList:any[];
+  price:number;
+  
+
+  // dummyBooking:any[]=[{ 
+  // "flightId":1,
+  // "price":5000,
+  // "firstName":"govind",
+  // "email":"urgovind7@gmail.com",
+  // "lastName":"Yadav",
+  // "phone":"7842413120",
+  // "type":"economy",
+
+  // }];
   formBuilder:FormBuilder=new FormBuilder();
   selIndex:number=1;
+  selectedFlight:Flight;
 
   ngOnInit() {
     if(localStorage.getItem('email')){
@@ -105,7 +123,32 @@ this.selIndex=1;
 }
 
 bookFlight(){
-  this.userService.bookFlight(this.myform).subscribe(data=>{
+ 
+ this.dummyList = this.myform.value;
+ 
+ 
+if(this.model.type==='Economy'){
+  this.price= this.selectedFlight.economyprice * this.model.adultCount+this.model.childCount;
+}else{
+  this.price= this.selectedFlight.business_price * this.model.adultCount+this.model.childCount;
+}
+ 
+this.dummyList.passengers.forEach(passenger=>{
+ 
+let booking= new Booking();
+booking.firstName=passenger.firstName;
+booking.lastName=passenger.lastName;
+booking.email= passenger.email;
+booking.price = this.price;
+booking.type= this.model.type;
+booking.flightId=this.selectedFlight.id;
+booking.journyDate =this.model.travellDate;
+booking.noOfSheet= this.model.adultCount+this.model.childCount;
+this.bookingList.push(booking);
+});
+
+  
+  this.userService.bookFlight(this.bookingList).subscribe(data=>{
 console.log("success"+data);
   },
   error=>{
@@ -116,9 +159,10 @@ createItem(): FormGroup {
   return this.formBuilder.group({
     firstName: new FormControl('', [Validators.required]),
     lastName:  new FormControl('', [Validators.required]),
+    middleName: new FormControl('', [Validators.required]),
     email:     new FormControl('', [Validators.required]),
-    phone:     new FormControl('', [Validators.required]),
-    middleName: new FormControl('', [Validators.required])
+    phone:     new FormControl('', [Validators.required])
+  
   });
 }
 addRow(){
@@ -151,13 +195,20 @@ validateAllFormFields(formGroup: FormGroup) {
     }
   });
 }
-firstNext(){
+firstNext() {
+  this.flights.forEach(flight => {
+if ( flight.flightnumber === '123') {
+  this.selectedFlight = flight;
+}
+  });
+  
 this.selIndex+=1;
 for(var i=0;i<this.model.adultCount-1;i++){
 this.addRow();    
 }
 }
 secondNext(){
+
   this.selIndex+=1;
 }
 thirdNext(){
