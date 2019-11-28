@@ -26,11 +26,19 @@ export class UserService {
 
     searchFlights(flightFilter: any) {
         console.log("into service value is : "+flightFilter.arrivingCity)
-        return this.http.post<any>('http://localhost:8090/flight/getFlights', flightFilter);
+        return this.http.post<any>('http://localhost:8080/flight/getFlights', flightFilter);
     }
 getCity(){
-    return this.http.get<any>('http://localhost:8090/flight/cities');
+    return this.http.get<any>('http://localhost:8080/flight/cities');
 }
+getReserVationDeatils(){
+    return this.http.get<any>('http://localhost:8080/reservations');
+}
+
+cancelReservation(reservationId: number){
+    return this.http.put<any>('http://localhost:8080/reservation/' + reservationId + '');
+}
+
     // update(user: User):Observable<any> {
     //     return this.http.put('/api/users/' + user.id, user);
     //}
@@ -40,6 +48,6 @@ getCity(){
     }
 
     bookFlight(bookDetails: any){
-return this.http.post<any>('http://localhost:8090/reservation',bookDetails);
+return this.http.post<any>('http://localhost:8080/reservation',bookDetails);
     }
 }

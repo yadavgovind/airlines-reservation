@@ -34,11 +34,11 @@ export class FlightlistMultyComponent implements OnInit {
   cities:City[];
   departItem:Airport;
   arrivalItem:Airport;
-  flightFilter: FlightFilter ;
+  flightFilter = new FlightFilter() ;
   flights:Flight[];
   model: any={};
   myform:FormGroup;
-  passengers:any[]=[];
+  passengers1:any[]=[];
   controls:any[]=[];
   bookingList:Booking[]=[];
   dummyList:any[];
@@ -57,7 +57,7 @@ export class FlightlistMultyComponent implements OnInit {
   // }];
   formBuilder:FormBuilder=new FormBuilder();
   selIndex:number=1;
-  selectedFlight:Flight;
+  selectedFlight= new Flight();
 
   ngOnInit() {
     if(localStorage.getItem('email')){
