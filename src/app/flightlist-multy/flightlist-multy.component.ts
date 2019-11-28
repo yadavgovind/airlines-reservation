@@ -93,6 +93,7 @@ export class FlightlistMultyComponent implements OnInit {
 
 searchFlights(){
 this.selIndex=1;
+this.deleteRow();
   this.userService.searchFlights(this.model)
       .subscribe(
           data => {
@@ -128,13 +129,12 @@ bookFlight(){
  
  
 if(this.model.type==='Economy'){
-  this.price= this.selectedFlight.economyprice * this.model.adultCount+this.model.childCount;
+  this.price= this.selectedFlight.economyprice * this.model.adultCount;
 }else{
-  this.price= this.selectedFlight.business_price * this.model.adultCount+this.model.childCount;
+  this.price= this.selectedFlight.business_price * this.model.adultCount;
 }
  
-this.dummyList.passengers.forEach(passenger=>{
- 
+this.dummyList['passengers'].forEach(passenger=>{
 let booking= new Booking();
 booking.firstName=passenger.firstName;
 booking.lastName=passenger.lastName;
@@ -143,7 +143,7 @@ booking.price = this.price;
 booking.type= this.model.type;
 booking.flightId=this.selectedFlight.id;
 booking.journyDate =this.model.travellDate;
-booking.noOfSheet= this.model.adultCount+this.model.childCount;
+booking.noOfSheet= this.model.adultCount;
 this.bookingList.push(booking);
 });
 
@@ -170,10 +170,13 @@ addRow(){
    fomarry.push(this.createItem());
    this.controls=fomarry.controls;
 }
-deleteRow(index){
+deleteRow(){
   let fomarry=this.myform.get('passengers') as FormArray;
-  fomarry.removeAt(index);
-  this.controls=fomarry.controls;
+  for(let k=1;k<fomarry.length;k++)
+  {
+    fomarry.removeAt(k);
+  }
+  this.controls=[];
 }
 isFieldValid(field: string,error:string,form:FormGroup) {
   let validError=error==null?true:form.get(field).hasError(error);
@@ -195,12 +198,11 @@ validateAllFormFields(formGroup: FormGroup) {
     }
   });
 }
-firstNext() {
-  this.flights.forEach(flight => {
-if ( flight.flightnumber === '123') {
+selectFlight(flight){
   this.selectedFlight = flight;
 }
-  });
+firstNext() {
+ 
   
 this.selIndex+=1;
 for(var i=0;i<this.model.adultCount-1;i++){
@@ -213,6 +215,9 @@ secondNext(){
 }
 thirdNext(){
   this.selIndex+=1;
+ 
+}
+bookNow(){
   this.bookFlight();
 }
 }
