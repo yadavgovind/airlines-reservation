@@ -5,7 +5,8 @@ export class Flight {
     	arrivalCity:string;
     	dateOfDeparture:string;
     	dateOfReturn:string;
-    	economyprice: number;
+		economyprice: number;
+		business_price:number;;
     	seatNo: number;
 		flightType:string;
 		arrivalTime:string;
