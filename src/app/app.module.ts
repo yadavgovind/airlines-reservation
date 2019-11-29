@@ -15,8 +15,9 @@ import {RouterModule, Routes} from '@angular/router';
 import { UserService } from './services/user.service';
 import { HttpClientModule ,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AlertService } from './services/alert.service';
-//import { FieldErrorDisplayComponent } from './field-error-display/field-error-display.component';
-
+import { ReservationDetailsComponent } from './reservation-details/reservation-details.component';
+ 
+ 
 const appRoutes: Routes = [
   {
    path: 'home',
@@ -47,6 +48,8 @@ const appRoutes: Routes = [
     AboutComponent,
     FlightlistMultyComponent,
     CardPaymentComponent,
+    ReservationDetailsComponent,
+    
     //FieldErrorDisplayComponent
   ],
   imports: [

@@ -28,14 +28,13 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if(this._route["url"]["_value"][0].path==="logout"){
-
         localStorage.setItem('email', "");
         this.sharedService.userSessionUpdateExecute(null);
     }
     // this._route.url.subscribe( res => {
     //   if ( res[0].path === "logout" ){
-    //   }
-    // });
+    //}
+    //});
   }
   login() {
     this.loading = true;

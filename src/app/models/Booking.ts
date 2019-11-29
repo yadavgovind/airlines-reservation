@@ -1,11 +1,15 @@
 export class Booking{
-    firstName :string;
+    firstName: string;
       lastName: string;
      email: string;
      phone: string;
-     price: string;
+     price: number;
      totalAmount: number ;
-    type :string;
-    passengerType : string;
+    type: string;
+    passengerType: string;
+flightId: number;
+journyDate: string;
+noOfSheet: number;
+ 
 
 }
