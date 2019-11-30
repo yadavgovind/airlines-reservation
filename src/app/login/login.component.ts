@@ -38,6 +38,14 @@ export class LoginComponent implements OnInit {
   }
   login() {
     this.loading = true;
+this.userService.authenticate(this.model).subscribe(token=>{
+  localStorage.setItem("JWT_TOKEN",token);
+},
+error=>{
+  console.log("login failed data token not found");
+  this.displaymessage="lohin Failure";
+    this.loading = true;
+});
     this.userService.validate(this.model)
         .subscribe(
             data => {

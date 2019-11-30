@@ -23,6 +23,9 @@ export class UserService {
     validate(user: User) {
         return this.http.post<User>('http://localhost:8090/user/verifyUser', user);
     }
+    authenticate(user: User){
+      return this.http.post<any>('http://localhost:8080/authenticate',user);
+    }
 
     searchFlights(flightFilter: any) {
         console.log("into service value is : "+flightFilter.arrivingCity)
@@ -36,7 +39,7 @@ getReserVationDeatils(){
 }
 
 cancelReservation(reservationId: number){
-    return this.http.put<any>('http://localhost:8080/reservation/' + reservationId + '');
+    return this.http.put<any>('http://localhost:8080/reservation/'+ reservationId ,"");
 }
 
     // update(user: User):Observable<any> {
