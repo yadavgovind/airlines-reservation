@@ -21,35 +21,21 @@
                                     <li class="active">
                                       <a [routerLink] ="['/flights']" title="">HOME</a>
                                     </li>
-                                    <li>
-                                      <a [routerLink] ="['/flights']" title="">FLIGHTS</a>
-                                      <ul class="dropdown">
-                                        <li><a [routerLink] ="['/flights']" title="">Search Flights</a></li>
-                                        <li><a [routerLink] ="['/reservation']" title="">All Reservation</a></li>
-                                      </ul>
-                                         </li>
-                                         <li *ngIf="!isActiveUserSessionExists">
-                                            <a [routerLink] ="['/login']" title="SignIn" >SIGNIN
-                                                <span class="icon-users"> </span>
-                                            </a>
-                                             <ul class="dropdown">
-                                                 <li><a [routerLink] ="['/rigister']" title="">Rigister</a></li>
-                                             </ul>
-                                         </li>
-                                         <li *ngIf="isActiveUserSessionExists">
-
-                                               <div id="profileicon" class="profileicon">
-                                                   <a [routerLink] ="['/profile']" title="Profile" >
-                                                       <img src="../../assets/images/profile_gray.svg" alt="">
-                                                   </a>
-                                               </div>
-                                                <div class="profile">
-                                                    <span>{{activeUser.email}}</span>
-                                                </div>
-                                                 <ul class="dropdown">
-                                                     <li><a [routerLink] ="['/logout']" title="">Logout</a></li>
-                                                 </ul>
-                                        </li>
+                                    <li *ngIf="isUserLogin">
+                                        <a [routerLink] ="['/reservation']" title="">Your Booking</a>
+                                    
+                                    </li>
+                                    <li *ngIf="isUserLogin">
+                                    <a >
+                                        <span class="icon-users"> </span>
+                                    </a>
+                                        <ul class="dropdown">
+                                                <li><a title=""> {{activeUser.userName}}</a></li>
+                                               
+                                            <li><a href="#" title="" (click)="logout()" >Logout</a></li>
+                                        </ul>
+                                    </li>
+                                         
 
                                      </ul>
                                  </div>

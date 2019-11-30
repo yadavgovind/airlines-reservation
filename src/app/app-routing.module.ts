@@ -8,17 +8,20 @@ import { FlightlistMultyComponent } from './flightlist-multy/flightlist-multy.co
 import { CardPaymentComponent } from './card-payment/card-payment.component';
 import { HeaderComponent } from './header/header.component';
 import { ReservationDetailsComponent } from './reservation-details/reservation-details.component';
+import { AuthGuard } from './auth-guard.service';
+import { AdminhomeComponent } from './admin/adminhome/adminhome.component';
+import { AuthAdminGuard } from './auth-admin-guard.service';
 
 
 const routes: Routes = [
   {path:"login",component:LoginComponent},
   {path:"rigister",component:RigisterComponent},
   {path:"",component:FlightlistMultyComponent},
-  {path:"flights",component:FlightlistMultyComponent},
+  {path:"flights",component:FlightlistMultyComponent,canActivate:[AuthGuard]},
   {path:"payment",component:CardPaymentComponent},
   {path:"header",component:HeaderComponent},
-  {path:"reservation",component: ReservationDetailsComponent}
-  
+  {path:"reservation",component: ReservationDetailsComponent},
+  {path:"adminhome",component: AdminhomeComponent,canActivate:[AuthAdminGuard]}
 ];
 
 @NgModule({

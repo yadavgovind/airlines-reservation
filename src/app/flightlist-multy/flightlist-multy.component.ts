@@ -14,7 +14,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService } from '../services/alert.service';
 import { City } from '../models/city';
 import { FlightFilter } from '../models/FlightFilter';
-import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, FormArray, RequiredValidator } from '@angular/forms';
 import { $ } from 'protractor';
 import { Booking } from '../models/Booking';
 
@@ -38,6 +38,7 @@ export class FlightlistMultyComponent implements OnInit {
   flights:Flight[];
   model: any={};
   myform:FormGroup;
+  paymentform:FormGroup;
   passengers1:any[]=[];
   controls:any[]=[];
   bookingList:Booking[]=[];
@@ -57,7 +58,7 @@ export class FlightlistMultyComponent implements OnInit {
   // }];
   formBuilder:FormBuilder=new FormBuilder();
   selIndex:number=1;
-  selectedFlight= new Flight();
+  selectedFlight:Flight= undefined;
 
   ngOnInit() {
     if(localStorage.getItem('email')){
@@ -72,7 +73,15 @@ export class FlightlistMultyComponent implements OnInit {
     this.userService.getCity().subscribe(data=>{
       this.cities=data;
     });
-    this.reinitFormArray();
+   this.paymentform=this.formBuilder.group({
+     'card':new FormControl('',[Validators.required]),
+     'year':new FormControl('',[Validators.required]),
+     'month':new FormControl('',[Validators.required]),
+     'cvc':new FormControl('',[Validators.required])
+   });
+   this.myform = this.formBuilder.group({
+    passengers: this.formBuilder.array([this.createItem()])
+  });
   }
   constructor(private http: HttpClient, private router: Router,private userService: UserService,
   private alertService:AlertService, private _route: ActivatedRoute, private sharedService: SharedService) {
@@ -93,7 +102,6 @@ export class FlightlistMultyComponent implements OnInit {
 
 searchFlights(){
 this.selIndex=1;
-this.deleteRow();
   this.userService.searchFlights(this.model)
       .subscribe(
           data => {
@@ -115,9 +123,12 @@ this.deleteRow();
 
  reinitFormArray(){
   this.myform = this.formBuilder.group({
-    passengers: this.formBuilder.array([ this.createItem() ])
+    passengers: this.formBuilder.array([])
   });
-  console.log("form generated ");
+ 
+  for(let k=0;k<this.model.adultCount;k++){
+   this.addRow();
+  }
   let fomarry   =   this.myform.get('passengers') as FormArray;
   this.controls =   fomarry.controls;
 
@@ -159,7 +170,6 @@ createItem(): FormGroup {
   return this.formBuilder.group({
     firstName: new FormControl('', [Validators.required]),
     lastName:  new FormControl('', [Validators.required]),
-    middleName: new FormControl('', [Validators.required]),
     email:     new FormControl('', [Validators.required]),
     phone:     new FormControl('', [Validators.required])
   
@@ -205,17 +215,24 @@ firstNext() {
  
   
 this.selIndex+=1;
-for(var i=0;i<this.model.adultCount-1;i++){
-this.addRow();    
-}
+this.reinitFormArray();
+
 }
 secondNext(){
 
   this.selIndex+=1;
 }
 thirdNext(){
+  if(this.myform.valid){
   this.selIndex+=1;
- 
+  }
+  else{
+    let fomarry=this.myform.get('passengers') as FormArray;
+     Object.keys(fomarry.controls).forEach(group => {
+      if(!fomarry.get(group).valid)
+      this.validateAllFormFields(fomarry.get(group) as FormGroup);
+   })
+   }
 }
 bookNow(){
   this.bookFlight();
