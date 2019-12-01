@@ -20,7 +20,7 @@ export class UserService {
         return this.http.get('/api/users/' + id);
     }
     create(user: User) {
-        return this.http.post<User>(this.apiurl+'/open/user/adduser', user);
+        return this.http.post<User>(this.apiurl+'open/user', user);
     }
     validate(user: User) {
         return this.http.post<User>('http://localhost:8090/open/user/verifyUser', user);
@@ -52,7 +52,7 @@ export class UserService {
         const options = {
             headers: new HttpHeaders({'Authorization':  sessionStorage.getItem("JWT_TOKEN")})
           }
-    return this.http.put<any>(this.apiurl+'reservation/'+ reservationId ,options);
+            return this.http.get<any>(this.apiurl+'reservation/'+ reservationId ,options);
     }                               
 
     // update(user: User):Observable<any> {
@@ -75,6 +75,18 @@ export class UserService {
             headers: new HttpHeaders({'Authorization':  sessionStorage.getItem("JWT_TOKEN")})
           }
           return this.http.get<User>(this.apiurl+'me',options);
+    }
+    passenger(pnr){
+        const options = {
+            headers: new HttpHeaders({'Authorization':  sessionStorage.getItem("JWT_TOKEN")})
+          }
+          return this.http.get<any>(this.apiurl+'passengers/'+pnr,options);
+    }
+    setSeat(details){
+        const options = {
+            headers: new HttpHeaders({'Authorization':  sessionStorage.getItem("JWT_TOKEN")})
+          }
+          return this.http.post<any>(this.apiurl+'changeSeat',details,options);
     }
     setLoginUser(user:User){
         this.loginUser=user;

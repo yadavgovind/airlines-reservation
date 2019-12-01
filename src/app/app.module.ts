@@ -20,7 +20,8 @@ import { AuthGuard } from './auth-guard.service';
 import { FieldErrorDisplayComponent } from './field-error-display/field-error-display.component';
 import { AdminhomeComponent } from './admin/adminhome/adminhome.component';
 import { AuthAdminGuard } from './auth-admin-guard.service';
- 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbdModalBasic } from './admin/NgbdModalBasic';
  
 const appRoutes: Routes = [
   {
@@ -51,18 +52,20 @@ const appRoutes: Routes = [
     CardPaymentComponent,
     ReservationDetailsComponent,
     FieldErrorDisplayComponent,
-    AdminhomeComponent
+    AdminhomeComponent,NgbdModalBasic
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    NgbModule,
     RouterModule.forRoot(
       appRoutes, { useHash: true}
     ),
     ReactiveFormsModule
   ],
+  entryComponents: [NgbdModalBasic],
   providers: [UserService,AlertService,AuthGuard,AuthAdminGuard],
   bootstrap: [AppComponent]
 })
