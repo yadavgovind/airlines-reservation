@@ -1,4 +1,6 @@
 import { Component, ElementRef } from '@angular/core';
+import { UserService } from './services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +10,19 @@ import { Component, ElementRef } from '@angular/core';
 export class AppComponent  {
   title = 'flight-demo-project';
   constructor(
-private elementRef:ElementRef
-  ){}
+private elementRef:ElementRef,private userService:UserService,private router:Router
+  ){
+    if(sessionStorage.getItem("JWT_TOKEN")!=undefined){
+      this.userService.me().subscribe(user=>{
+        this.userService.setLoginUser(user);
+        if(user.role=='user')
+          this.router.navigateByUrl('home');
+        else
+         this.router.navigateByUrl('adminhome');
+      })
+    }
+    else this.router.navigateByUrl('login');
+  }
 
   ngAfterViewInit(){
     var style=document.createElement('link');

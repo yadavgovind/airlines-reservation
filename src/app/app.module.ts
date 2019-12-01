@@ -15,24 +15,26 @@ import {RouterModule, Routes} from '@angular/router';
 import { UserService } from './services/user.service';
 import { HttpClientModule ,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AlertService } from './services/alert.service';
-//import { FieldErrorDisplayComponent } from './field-error-display/field-error-display.component';
-
+import { ReservationDetailsComponent } from './reservation-details/reservation-details.component';
+import { AuthGuard } from './auth-guard.service';
+import { FieldErrorDisplayComponent } from './field-error-display/field-error-display.component';
+import { AdminhomeComponent } from './admin/adminhome/adminhome.component';
+import { AuthAdminGuard } from './auth-admin-guard.service';
+ 
+ 
 const appRoutes: Routes = [
   {
    path: 'home',
-   component: FlightlistMultyComponent
+   component: FlightlistMultyComponent ,canActivate:[AuthGuard]
  },
    {
     path: 'login',
     component: LoginComponent
   },
-    {
-     path: 'logout',
-     component: LoginComponent
-   },
+    
   {
     path: '**',
-    redirectTo: 'home'
+    redirectTo: 'login'
   }
 ];
 
@@ -47,7 +49,9 @@ const appRoutes: Routes = [
     AboutComponent,
     FlightlistMultyComponent,
     CardPaymentComponent,
-    //FieldErrorDisplayComponent
+    ReservationDetailsComponent,
+    FieldErrorDisplayComponent,
+    AdminhomeComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +63,7 @@ const appRoutes: Routes = [
     ),
     ReactiveFormsModule
   ],
-  providers: [UserService,AlertService],
+  providers: [UserService,AlertService,AuthGuard,AuthAdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

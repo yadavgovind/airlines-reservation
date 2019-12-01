@@ -17,7 +17,7 @@ import { AlertService } from '../services/alert.service';
 export class LoginComponent implements OnInit {
 
     [x: string]: any;
-    model: any = {'agree':'','userName':'', 'mobileNumber':''};
+    model: any = {'agree':'','username':'', 'password':''};
     message = false;
     loading = true;
     displaymessage:string
@@ -27,32 +27,25 @@ export class LoginComponent implements OnInit {
    private router: Router, private sharedService: SharedService) { }
 
   ngOnInit() {
-    if(this._route["url"]["_value"][0].path==="logout"){
-        localStorage.setItem('email', "");
-        this.sharedService.userSessionUpdateExecute(null);
-    }
-    // this._route.url.subscribe( res => {
-    //   if ( res[0].path === "logout" ){
-    //}
-    //});
+    
   }
   login() {
     this.loading = true;
-    this.userService.validate(this.model)
-        .subscribe(
-            data => {
-              console.log("login sucess data:"+data);
-              localStorage.setItem('email', data.email);
-              this.sharedService.userSessionUpdateExecute(data);
-              this.loading=false;
-              this.message=true;
-              this.displaymessage="Login successful";
-              this.router.navigate(['/home']);
-          },
-          error => {
-            console.log("login failed data");
-            this.displaymessage="lohin Failure";
-              this.loading = true;
-          });
+    this.userService.authenticate(this.model).subscribe(token=>{
+      sessionStorage.setItem("JWT_TOKEN",'Bearer '+token.token);
+      this.userService.me().subscribe(user=>{
+        this.userService.setLoginUser(user);
+        if(user.role=='user')
+        this.router.navigateByUrl('home');
+        else
+        this.router.navigateByUrl('adminhome');
+      })
+    },
+    error=>{
+      console.log("login failed data token not found"); 
+      this.displaymessage="Username Password Incorrect";
+        this.loading = true;
+    });
+   
   }
 }
