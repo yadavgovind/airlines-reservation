@@ -18,7 +18,7 @@ export class ReservationDetailsComponent implements OnInit {
   getReservationDetail(){
     this.userService.getReserVationDeatils().subscribe(data=> {
      this.reservation=data;
-     console.log(this.reservation+"ccccccccccccccccccccccccccccccc")
+     
     },
     error=>{
       console.error("error")
@@ -27,8 +27,8 @@ export class ReservationDetailsComponent implements OnInit {
   }
 
   cancelClick(reservationId:number){
-    alert(reservationId+"");
     this.userService.cancelReservation(reservationId).subscribe(reser=>{
+      this.getReservationDetail();
       console.log("success");
     },
     error=>{
