@@ -1,8 +1,8 @@
 ﻿import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../models/user';
 import { Flight } from '../models/flight';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { City } from '../models/city';
 import { FlightFilter } from '../models/FlightFilter';
 
@@ -11,36 +11,49 @@ import { FlightFilter } from '../models/FlightFilter';
 @Injectable()
 export class UserService {
     constructor(private http: HttpClient) { }
-
+    private loginUser:User=undefined;
+    private isLogin:boolean=false;
+    private apiurl = 'http://localhost:8090/';
+    private subject = new Subject<any>() ;
     getById(id: number) {
+        
         return this.http.get('/api/users/' + id);
     }
-
     create(user: User) {
-        return this.http.post<User>('http://localhost:8090/user/adduser', user);
+        return this.http.post<User>(this.apiurl+'open/user', user);
     }
-
     validate(user: User) {
-        return this.http.post<User>('http://localhost:8090/user/verifyUser', user);
+        return this.http.post<User>('http://localhost:8090/open/user/verifyUser', user);
     }
     authenticate(user: User){
-      return this.http.post<any>('http://localhost:8080/authenticate',user);
+      return this.http.post<any>(this.apiurl+'open/authenticate',user);
     }
 
     searchFlights(flightFilter: any) {
-        console.log("into service value is : "+flightFilter.arrivingCity)
-        return this.http.post<any>('http://localhost:8080/flight/getFlights', flightFilter);
+        const options = {
+            headers: new HttpHeaders({'Authorization':  sessionStorage.getItem("JWT_TOKEN")})
+          }
+        return this.http.post<any>(this.apiurl+'flight/getFlights', flightFilter,options);
     }
-getCity(){
-    return this.http.get<any>('http://localhost:8080/flight/cities');
-}
-getReserVationDeatils(){
-    return this.http.get<any>('http://localhost:8080/reservations');
-}
+    getCity(){
+        const options = {
+            headers: new HttpHeaders({'Authorization':  sessionStorage.getItem("JWT_TOKEN")})
+          }
+        return this.http.get<any>(this.apiurl+'flight/cities',options);
+    }
+    getReserVationDeatils(){
+        const options = {
+            headers: new HttpHeaders({'Authorization':  sessionStorage.getItem("JWT_TOKEN")})
+          }
+    return this.http.get<any>(this.apiurl+'reservations',options);
+    }      
 
-cancelReservation(reservationId: number){
-    return this.http.put<any>('http://localhost:8080/reservation/'+ reservationId ,"");
-}
+    cancelReservation(reservationId: number){
+        const options = {
+            headers: new HttpHeaders({'Authorization':  sessionStorage.getItem("JWT_TOKEN")})
+          }
+            return this.http.get<any>(this.apiurl+'reservation/'+ reservationId ,options);
+    }                               
 
     // update(user: User):Observable<any> {
     //     return this.http.put('/api/users/' + user.id, user);
@@ -51,6 +64,41 @@ cancelReservation(reservationId: number){
     }
 
     bookFlight(bookDetails: any){
-return this.http.post<any>('http://localhost:8080/reservation',bookDetails);
+        const options = {
+            headers: new HttpHeaders({'Authorization':  sessionStorage.getItem("JWT_TOKEN")})
+          }
+        return this.http.post<any>(this.apiurl+'reservation',bookDetails,options);
+    }
+
+    me(){
+        const options = {
+            headers: new HttpHeaders({'Authorization':  sessionStorage.getItem("JWT_TOKEN")})
+          }
+          return this.http.get<User>(this.apiurl+'me',options);
+    }
+    passenger(pnr){
+        const options = {
+            headers: new HttpHeaders({'Authorization':  sessionStorage.getItem("JWT_TOKEN")})
+          }
+          return this.http.get<any>(this.apiurl+'passengers/'+pnr,options);
+    }
+    setSeat(details){
+        const options = {
+            headers: new HttpHeaders({'Authorization':  sessionStorage.getItem("JWT_TOKEN")})
+          }
+          return this.http.post<any>(this.apiurl+'changeSeat',details,options);
+    }
+    setLoginUser(user:User){
+        this.loginUser=user;
+        this.subject.next(user);
+    }
+    getLoginUser():User{
+        return this.loginUser;
+    }
+    isUserLoggedIn(){
+        return this.loginUser==undefined?false:true;
+    }
+    getLoginEvent(): Observable<any> {
+        return this.subject.asObservable();
     }
 }

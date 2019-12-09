@@ -16,24 +16,26 @@ import { UserService } from './services/user.service';
 import { HttpClientModule ,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AlertService } from './services/alert.service';
 import { ReservationDetailsComponent } from './reservation-details/reservation-details.component';
- 
+import { AuthGuard } from './auth-guard.service';
+import { FieldErrorDisplayComponent } from './field-error-display/field-error-display.component';
+import { AdminhomeComponent } from './admin/adminhome/adminhome.component';
+import { AuthAdminGuard } from './auth-admin-guard.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbdModalBasic } from './admin/NgbdModalBasic';
  
 const appRoutes: Routes = [
   {
    path: 'home',
-   component: FlightlistMultyComponent
+   component: FlightlistMultyComponent ,canActivate:[AuthGuard]
  },
    {
     path: 'login',
     component: LoginComponent
   },
-    {
-     path: 'logout',
-     component: LoginComponent
-   },
+    
   {
     path: '**',
-    redirectTo: 'home'
+    redirectTo: 'login'
   }
 ];
 
@@ -49,20 +51,22 @@ const appRoutes: Routes = [
     FlightlistMultyComponent,
     CardPaymentComponent,
     ReservationDetailsComponent,
-    
-    //FieldErrorDisplayComponent
+    FieldErrorDisplayComponent,
+    AdminhomeComponent,NgbdModalBasic
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    NgbModule,
     RouterModule.forRoot(
       appRoutes, { useHash: true}
     ),
     ReactiveFormsModule
   ],
-  providers: [UserService,AlertService],
+  entryComponents: [NgbdModalBasic],
+  providers: [UserService,AlertService,AuthGuard,AuthAdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

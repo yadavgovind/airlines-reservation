@@ -14,7 +14,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService } from '../services/alert.service';
 import { City } from '../models/city';
 import { FlightFilter } from '../models/FlightFilter';
-import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, FormArray, RequiredValidator } from '@angular/forms';
 import { $ } from 'protractor';
 import { Booking } from '../models/Booking';
 
@@ -36,15 +36,16 @@ export class FlightlistMultyComponent implements OnInit {
   arrivalItem:Airport;
   flightFilter = new FlightFilter() ;
   flights:Flight[];
+  returnFlights:Flight[];
   model: any={};
   myform:FormGroup;
+  paymentform:FormGroup;
   passengers1:any[]=[];
   controls:any[]=[];
-  bookingList:Booking[]=[];
-  dummyList:any[];
+ 
   price:number;
   
-
+   bookingStatus:boolean=false;
   // dummyBooking:any[]=[{ 
   // "flightId":1,
   // "price":5000,
@@ -57,8 +58,8 @@ export class FlightlistMultyComponent implements OnInit {
   // }];
   formBuilder:FormBuilder=new FormBuilder();
   selIndex:number=1;
-  selectedFlight= new Flight();
-
+  selectedFlight:Flight= undefined;
+  returnSelectedFlight:Flight=undefined;
   ngOnInit() {
     if(localStorage.getItem('email')){
       this.getJSON().subscribe(data => {
@@ -72,7 +73,15 @@ export class FlightlistMultyComponent implements OnInit {
     this.userService.getCity().subscribe(data=>{
       this.cities=data;
     });
-    this.reinitFormArray();
+   this.paymentform=this.formBuilder.group({
+     'card':new FormControl('',[Validators.required]),
+     'year':new FormControl('',[Validators.required]),
+     'month':new FormControl('',[Validators.required]),
+     'cvc':new FormControl('',[Validators.required])
+   });
+   this.myform = this.formBuilder.group({
+    passengers: this.formBuilder.array([this.createItem()])
+  });
   }
   constructor(private http: HttpClient, private router: Router,private userService: UserService,
   private alertService:AlertService, private _route: ActivatedRoute, private sharedService: SharedService) {
@@ -93,11 +102,15 @@ export class FlightlistMultyComponent implements OnInit {
 
 searchFlights(){
 this.selIndex=1;
-this.deleteRow();
+this.bookingStatus=false;
+this.returnSelectedFlight=undefined;
+this.selectedFlight=undefined;
+this.paymentform.reset();
   this.userService.searchFlights(this.model)
       .subscribe(
           data => {
             this.flights=data.arrivalFlightList;
+            this.returnFlights=data.departFlightList;
             console.log("flight search sucess data:"+this.flights);
 
         },
@@ -115,51 +128,43 @@ this.deleteRow();
 
  reinitFormArray(){
   this.myform = this.formBuilder.group({
-    passengers: this.formBuilder.array([ this.createItem() ])
+    passengers: this.formBuilder.array([])
   });
-  console.log("form generated ");
+ 
+  for(let k=0;k<this.model.adultCount;k++){
+   this.addRow();
+  }
   let fomarry   =   this.myform.get('passengers') as FormArray;
   this.controls =   fomarry.controls;
 
 }
 
 bookFlight(){
- 
- this.dummyList = this.myform.value;
- 
- 
-if(this.model.type==='Economy'){
-  this.price= this.selectedFlight.economyprice * this.model.adultCount;
-}else{
-  this.price= this.selectedFlight.business_price * this.model.adultCount;
+ let book:any={};
+ book.passengers = this.myform.value['passengers'];
+book.price = this.price;
+book.type= this.model.type;
+book.flightId=this.selectedFlight.id;
+book.journyDate =this.model.travellDate;
+book.noOfSheet= this.model.adultCount;
+if(this.returnSelectedFlight!=undefined){
+  book.returnFlightId=this.returnSelectedFlight.id;
+  book.returnDate =this.model.returnDate;
 }
- 
-this.dummyList['passengers'].forEach(passenger=>{
-let booking= new Booking();
-booking.firstName=passenger.firstName;
-booking.lastName=passenger.lastName;
-booking.email= passenger.email;
-booking.price = this.price;
-booking.type= this.model.type;
-booking.flightId=this.selectedFlight.id;
-booking.journyDate =this.model.travellDate;
-booking.noOfSheet= this.model.adultCount;
-this.bookingList.push(booking);
-});
-
-  
-  this.userService.bookFlight(this.bookingList).subscribe(data=>{
-console.log("success"+data);
-  },
+this.userService.bookFlight(book).subscribe(data=>{
+  console.log("success"+data);
+  this.bookingStatus=true;
+  this.selIndex+=1;
+},
   error=>{
     console.log("success"+error);
+    this.bookingStatus=false;
   })
 }
 createItem(): FormGroup {
   return this.formBuilder.group({
     firstName: new FormControl('', [Validators.required]),
     lastName:  new FormControl('', [Validators.required]),
-    middleName: new FormControl('', [Validators.required]),
     email:     new FormControl('', [Validators.required]),
     phone:     new FormControl('', [Validators.required])
   
@@ -201,21 +206,61 @@ validateAllFormFields(formGroup: FormGroup) {
 selectFlight(flight){
   this.selectedFlight = flight;
 }
-firstNext() {
- 
-  
-this.selIndex+=1;
-for(var i=0;i<this.model.adultCount-1;i++){
-this.addRow();    
+selectReturnFlight(flight){
+this.returnSelectedFlight=flight;
 }
+firstNext() { 
+  if(this.selectedFlight==undefined){
+    alert('Select Flight');
+    return;
+  }
+  if(this.model.returnDate==undefined){
+   this.selIndex+=2;
+   this.reinitFormArray();
+  }
+  else{
+  this.selIndex+=1;
+  }
+
+}
+returnSelectNext(){
+  if(this.returnSelectedFlight==undefined){
+    alert('Select return Flight');
+    return;
+  }
+  this.selIndex+=1;
+  this.reinitFormArray();
 }
 secondNext(){
 
   this.selIndex+=1;
+  let totalPrice=0;
+  if(this.model.type==='Economy'){
+    totalPrice= this.selectedFlight.economyprice * this.model.adultCount;
+  }else{
+    totalPrice= this.selectedFlight.business_price * this.model.adultCount;
+  }
+  if(this.selectReturnFlight!=undefined){
+    if(this.model.type==='Economy'){
+      totalPrice+= this.selectedFlight.economyprice * this.model.adultCount;
+    }else{
+      totalPrice+= this.selectedFlight.business_price * this.model.adultCount;
+    }
+  }
+  this.price=totalPrice;
+
 }
 thirdNext(){
+  if(this.myform.valid){
   this.selIndex+=1;
- 
+  }
+  else{
+    let fomarry=this.myform.get('passengers') as FormArray;
+     Object.keys(fomarry.controls).forEach(group => {
+      if(!fomarry.get(group).valid)
+      this.validateAllFormFields(fomarry.get(group) as FormGroup);
+   })
+   }
 }
 bookNow(){
   this.bookFlight();

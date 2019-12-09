@@ -118,9 +118,10 @@
 				<div class="col-lg-9 col-md-8">
 					<ul class="process-flight ">
 						<li [ngClass]="{'choose':selIndex==1}"> Find The Flight</li>
-						<li [ngClass]="{'choose':selIndex==2}"> Select Flight</li>
-						<li [ngClass]="{'choose':selIndex==3}">Passenger</li>
-						<li [ngClass]="{'choose':selIndex==4}">Payment</li>
+						<li [ngClass]="{'choose':selIndex==2}" *ngIf="model.returnDate!=undefined"> Select Return Flight</li>
+						<li [ngClass]="{'choose':selIndex==3}"> Select Flight</li>
+						<li [ngClass]="{'choose':selIndex==4}">Passenger</li>
+						<li [ngClass]="{'choose':selIndex==5}">Payment</li>
 					</ul>
 					<div class="flights-list" [hidden]="selIndex!=1">
 						<div class="title-flights bg-default" *ngIf="flights!=undefined&&flights.length>0">
@@ -256,8 +257,141 @@
 								<button type="submit" class="btn btn-primary btnSend "(click)="firstNext()">NEXT</button>
 						</div>
 					</div>
-
-					<div class="flights-list" [hidden]="selIndex!=2"> Selected Flight
+					<div class="flights-list" [hidden]="selIndex!=2">
+							<div class="title-flights bg-default" *ngIf="returnFlights!=undefined&&returnFlights.length>0">
+								<h6><img src="images/icon/icon_flight.png" alt="">{{returnFlights[0].arrivalCity.code}} - {{returnFlights[0].departurecity.code}}</h6>
+								<span>{{returnFlights.length}} Trips</span>
+							</div>
+							<div class="flights-content bg-white">
+								<div class="table-flight">
+									<div class="title">
+										<div class="airlines">Airlines</div>
+										<div class="departure">Departure</div>
+										<div class="arrival">Arrival</div>
+										<div class="duration">Duration</div>
+										<div class="price">Price</div>
+									</div>
+									<div class="inner-content"  *ngFor='let flight of returnFlights'>
+										<div class="flight-item">
+											<div class="airlines">
+												
+											   <div class="radio">
+												  <label><input type="radio" name="optradio" [value]= "flight" (change)="selectReturnFlight(flight)" />{{flight.operatingAirlines}}</label>
+												</div>
+												
+											</div>
+											<div class="departure">
+												<span class="time"><strong>{{flight.depature_time}}</strong></span>
+												<span class="code">{{flight.departurecity.code}}</span>
+											</div>
+											<div class="arrival">
+												<span class="time"><strong>{{flight.arrival_time}}</strong></span>
+												<span class="code">{{flight.arrivalCity.code}}</span>
+											</div>
+											<div class="duration">
+												<span class="time-line">{{flight.duration}}</span>
+												<span class="option">Non-Stop</span>
+											</div>
+											<div class="price">
+												{{flight.economyprice}}<span class="unit">USD</span>
+												<span class="more icon-dot-3"></span>
+											</div>
+										</div>
+										<div class="flight-detail ver-1">
+											<div class="detail">
+												<h6>01. Flight details</h6>
+												<div class="detail-content">
+													<ul>
+														<li>Airlines: <span>{{flight.operatingAirlines}}</span></li>
+														<li>Class: <span>{{model.type}}</span></li>
+														<li>Aircraff: <span>{{flight.flightNumber}}</span></li>
+													</ul>
+													<div class="flight-address">
+														<div class="flight-from">
+															<h4>{{flight.depature_time}}</h4>
+															<p>{{flight.departurecity.city}}</p>
+														</div>
+														<div class="flight-duration">
+															<h6>{{flight.duration}}</h6>
+															<p>Flight Duration</p>
+														</div>
+														<div class="flight-to">
+															<h4>{{flight.arrival_time}}</h4>
+															<p>{{flight.arrivalCity.city}}</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="detail">
+												<h6>02. Fare Details</h6>
+												<table>
+													<thead>
+														<tr>
+															<th>Passenger type</th>
+															<th>Number tickets</th>
+															<th>Price ticket</th>
+															
+															<th>Total price</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>Adult</td>
+															<td>{{model.adultCount}}</td>
+															<td>${{flight.business_price}}</td>
+															<td>${{flight.business_price*model.adultCount}}</td>
+														</tr>
+														
+														<tr class="total">
+															<td>Total money</td>
+															<td></td>
+															<td></td>
+															
+															<td class="price">${{ flight.business_price*model.adultCount}}</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<div class="detail">
+												<h6>03. Baggage Information</h6>
+												<table>
+													<thead>
+														<tr>
+															<th>Baggage Type</th>
+															<th>Check-In Baggage</th>
+															<th>Hand Baggage</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>Adults</td>
+															<td>{{flight.checkin_baggage}}</td>
+															<td>{{flight.hand_baggage}}</td>
+														</tr>
+														<tr>
+															<td>Children</td>
+															<td>{{flight.checkin_baggage}}</td>
+															<td>{{flight.hand_baggage}}</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<p>The baggage information is just for reference. Please Check with airline
+												before check-in. For more information, visit Air India Website. * 1Pc = 23Kg
+											</p>
+										</div>
+									 
+	
+	
+										
+									</div>
+								</div>
+							</div>
+							<div class="button-next">
+									<button type="submit" class="btn btn-primary btnSend "(click)="returnSelectNext()">NEXT</button>
+							</div>
+						</div>
+					<div class="flights-list" [hidden]="selIndex!=3"> Selected Flight
 
 							<div class="flights-content bg-white" *ngIf="selectedFlight!=undefined">
 									<div class="table-flight">
@@ -382,16 +516,141 @@
 						
 										</div>
 									</div>
-								</div>
-								<div class="button-next">
-										<button type="submit" class="btn btn-primary btnSend "(click)="secondNext()">NEXT</button>
-								</div>
+							</div>
+							<div class="flights-content bg-white" *ngIf="returnSelectedFlight!=undefined">
+									<div class="table-flight">
+										<div class="title">
+											<div class="airlines">Airlines</div>
+											<div class="departure">Departure</div>
+											<div class="arrival">Arrival</div>
+											<div class="duration">Duration</div>
+											<div class="price">Price</div>
+										</div>
+										<div class="inner-content">
+											<div class="flight-item">
+										<div class="airlines">
+											<div class="checkbox ver-1">
+											
+												<label for="american1">{{returnSelectedFlight.operatingAirlines}}</label>
+											</div>
+
+											<span class="airlines"></span>
+										</div>
+										<div class="departure">
+											<span class="time"><strong>{{returnSelectedFlight.depature_time}}</strong></span>
+											<span class="code">{{returnSelectedFlight.departurecity.code}}</span>
+										</div>
+										<div class="arrival">
+											<span class="time"><strong>{{returnSelectedFlight.arrival_time}}</strong></span>
+											<span class="code">{{returnSelectedFlight.arrivalCity.code}}</span>
+										</div>
+										<div class="duration">
+											<span class="time-line">{{returnSelectedFlight.duration}}</span>
+											<span class="option">Non-Stop</span>
+										</div>
+										<div class="price">
+											{{returnSelectedFlight.economyprice}}<span class="unit">USD</span>
+											<span class="more icon-dot-3"></span>
+										</div>
+									</div>
+									<div class="flight-detail ver-1">
+										<div class="detail">
+											<h6>01. Flight details</h6>
+											<div class="detail-content">
+												<ul>
+													<li>Airlines: <span>{{returnSelectedFlight.operatingAirlines}}</span></li>
+													<li>Class: <span>{{model.type}}</span></li>
+													<li>Aircraff: <span>{{returnSelectedFlight.flightNumber}}</span></li>
+												</ul>
+												<div class="flight-address">
+													<div class="flight-from">
+														<h4>{{returnSelectedFlight.depature_time}}</h4>
+														<p>{{returnSelectedFlight.departurecity.city}}</p>
+													</div>
+													<div class="flight-duration">
+														<h6>{{returnSelectedFlight.duration}}</h6>
+														<p>Flight Duration</p>
+													</div>
+													<div class="flight-to">
+														<h4>{{returnSelectedFlight.arrival_time}}</h4>
+														<p>{{returnSelectedFlight.arrivalCity.city}}</p>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="detail">
+											<h6>02. Fare Details</h6>
+											<table>
+												<thead>
+													<tr>
+														<th>Passenger type</th>
+														<th>Number tickets</th>
+														<th>Price ticket</th>
+													
+														<th>Total price</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>Adult</td>
+														<td>{{model.adultCount}}</td>
+														<td>${{returnSelectedFlight.business_price}}</td>
+														
+														<td>$({{returnSelectedFlight.business_price*model.adultCount}})</td>
+													</tr>
+													
+													<tr class="total">
+														<td>Total money</td>
+														<td></td>
+														<td></td>
+														
+														<td class="price">${{returnSelectedFlight.business_price*model.adultCount}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<div class="detail">
+											<h6>03. Baggage Information</h6>
+											<table>
+												<thead>
+													<tr>
+														<th>Baggage Type</th>
+														<th>Check-In Baggage</th>
+														<th>Hand Baggage</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>Adults</td>
+														<td>{{returnSelectedFlight.checkin_baggage}}</td>
+														<td>{{returnSelectedFlight.hand_baggage}}</td>
+													</tr>
+													<tr>
+														<td>Children</td>
+														<td>{{returnSelectedFlight.checkin_baggage}}</td>
+														<td>{{returnSelectedFlight.hand_baggage}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<p>The baggage information is just for reference. Please Check with airline
+											before check-in. For more information, visit Air India Website. * 1Pc = 23Kg
+										</p>
+									</div>
+						
+										</div>
+									</div>
+							</div>
+							<div class="button-next">
+									<button type="submit" class="btn btn-primary btnSend "(click)="secondNext()">NEXT</button>
+							</div>
 					</div>
-					<div class="selected-passenger" [hidden]="selIndex!=3">
+					
+					<div class="selected-passenger" [hidden]="selIndex!=4">
 
 						<div class="flights-content bg-white">
 							<form class="formWrapper" id="recommendation" role="form" [formGroup]="myform"
-								(ngSubmit)="submitForm()" novalidate>
+								(ngSubmit)="thirdNext()" novalidate>
 								<h2 class="formHeading p-2">Add Passengers </h2>
 
 								<div class="row AddFormRow mt-3" formArrayName="passengers"
@@ -401,28 +660,34 @@
 											<div class="form-group">
 												<input id="fname" type="text" placeholder="First name"
 													class="form-control" formControlName="firstName">
-												
+													<app-field-error-display [displayError]="isFieldValid('firstName','required',item)" errorMsg="Firstname is required." backFade="true">
+														</app-field-error-display>
 											</div>
 										</div>
 										<div class="col-xs-12 col-sm-3 col-md-3">
 											<div class="form-group">
 												<input id="lname" type="text" placeholder="Last name"
 													class="form-control" formControlName="lastName">
-												
+													<app-field-error-display [displayError]="isFieldValid('lastName','required',item)" errorMsg="LastName is required." backFade="true">
+														</app-field-error-display>
 											</div>
 										</div>
 										<div class="col-xs-12 col-sm-4 col-md-3">
 											<div class="form-group">
 												<input id="semail" type="text" placeholder="Email" class="form-control"
 													formControlName="email" />
-
+													<app-field-error-display [displayError]="isFieldValid('email','required',item)" errorMsg="Email is required." backFade="true">
+														</app-field-error-display>
+														<app-field-error-display [displayError]="isFieldValid('email','email',item)" errorMsg="Email is not correct." backFade="true">
+															</app-field-error-display>
 											</div>
 										</div>
 										<div class="col-xs-12 col-sm-4 col-md-3">
 											<div class="form-group">
 												<input id="sphone" type="number" placeholder="Phone"
 													class="form-control" formControlName="phone" />
-
+													<app-field-error-display [displayError]="isFieldValid('phone','required',item)" errorMsg="Phone is required." backFade="true">
+														</app-field-error-display>
 											</div>
 										</div>
 										
@@ -435,7 +700,7 @@
 
 								<div class="row nomargin addMoreRow text-center">
 									<div class="col-xs-12 col-sm-3 col-md-3 col-md-offset-6 text-center ">
-										<button type="submit" class="btn btn-primary btnSend " (click)="thirdNext()">Next</button>
+										<button type="submit" class="btn btn-primary btnSend "  >Next</button>
 									</div>
 								</div>
 								<div class="clearfix"></div>
@@ -444,9 +709,63 @@
 						</div>
 
 					</div>
-					<div class="payment" [hidden]="selIndex!=4">Payment
-						<button type="submit" class="btn btn-primary btnSend "(click)="bookNow()">Pay Now</button>
+					<div class="payment" [hidden]="selIndex!=5">
 
+							<div class="flights-content bg-white">
+									<form class="formWrapper" id="recommendation" role="form" [formGroup]="paymentform"
+										(ngSubmit)="bookNow()" novalidate>
+										<h2 class="formHeading p-2">Payment Details</h2>
+		                                 <h4>Total Amount:{{price}}</h4>
+										<div class="row AddFormRow mt-3">
+											<div  class="row px-5">
+												<div class="col-xs-12 col-sm-6 col-md-6">
+													<div class="form-group">
+														<input id="fname" type="number" placeholder="Card NO"
+															class="form-control" formControlName="card">
+														
+													</div>
+												</div>
+												<div class="col-xs-12 col-sm-2 col-md-2">
+													<div class="form-group">
+														<input id="lname" type="number" placeholder="Year"
+															class="form-control" formControlName="year">
+														
+													</div>
+												</div>
+												<div class="col-xs-12 col-sm-2 col-md-2">
+													<div class="form-group">
+														<input id="semail" type="number" placeholder="Month" class="form-control"
+															formControlName="month" />
+		
+													</div>
+												</div>
+												<div class="col-xs-12 col-sm-2 col-md-2">
+													<div class="form-group">
+														<input id="sphone" type="number" placeholder="cvc"
+															class="form-control" formControlName="cvc" />
+		
+													</div>
+												</div>
+												
+											</div>
+										</div>
+		
+		
+		                               <p [hidden]="!this.bookingStatus" style="color: red;">Booking Error </p>
+		
+										<div class="row nomargin addMoreRow text-center">
+											<div class="col-xs-12 col-sm-3 col-md-3 col-md-offset-6 text-center ">
+												<button type="submit" class="btn btn-primary btnSend " [disabled]="!paymentform.valid">Book Now</button>
+											</div>
+										</div>
+										<div class="clearfix"></div>
+									</form>
+		
+								</div>
+
+					</div>
+					<div class="payment" [hidden]="selIndex!=6">
+					  You have success fully booked your ticket.
 					</div>
 				</div>
 			</div>
