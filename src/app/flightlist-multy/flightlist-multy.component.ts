@@ -46,6 +46,7 @@ export class FlightlistMultyComponent implements OnInit {
   price:number;
   
    bookingStatus:boolean=false;
+   bookingmsg:any;
   // dummyBooking:any[]=[{ 
   // "flightId":1,
   // "price":5000,
@@ -152,12 +153,14 @@ if(this.returnSelectedFlight!=undefined){
   book.returnDate =this.model.returnDate;
 }
 this.userService.bookFlight(book).subscribe(data=>{
-  console.log("success"+data);
+  console.log("success"+data.status);
+  this.bookingmsg=data.status;
   this.bookingStatus=true;
   this.selIndex+=1;
 },
   error=>{
-    console.log("success"+error);
+    console.log("ERROR"+error);
+    this.bookingmsg=error;
     this.bookingStatus=false;
   })
 }

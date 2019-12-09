@@ -11,6 +11,7 @@ import { ReservationDetailsComponent } from './reservation-details/reservation-d
 import { AuthGuard } from './auth-guard.service';
 import { AdminhomeComponent } from './admin/adminhome/adminhome.component';
 import { AuthAdminGuard } from './auth-admin-guard.service';
+import { FlightCancelComponent } from './flight-cancel/flight-cancel.component';
 
 
 const routes: Routes = [
@@ -21,7 +22,9 @@ const routes: Routes = [
   {path:"payment",component:CardPaymentComponent},
   {path:"header",component:HeaderComponent},
   {path:"reservation",component: ReservationDetailsComponent},
-  {path:"adminhome",component: AdminhomeComponent,canActivate:[AuthAdminGuard]}
+  {path:"adminhome",component: AdminhomeComponent,canActivate:[AuthAdminGuard]},
+  {path:"flightCancel",component: FlightCancelComponent,canActivate:[AuthAdminGuard]}
+  
 ];
 
 @NgModule({

@@ -41,6 +41,7 @@ export class UserService {
           }
         return this.http.get<any>(this.apiurl+'flight/cities',options);
     }
+
     getReserVationDeatils(){
         const options = {
             headers: new HttpHeaders({'Authorization':  sessionStorage.getItem("JWT_TOKEN")})
@@ -100,5 +101,21 @@ export class UserService {
     }
     getLoginEvent(): Observable<any> {
         return this.subject.asObservable();
+    }
+
+
+    getFlights(){
+        const options = {
+            headers: new HttpHeaders({'Authorization':  sessionStorage.getItem("JWT_TOKEN")})
+          }
+        return this.http.get<any>(this.apiurl+'flight/fights',options);
+    }
+
+    cancelFlight(){
+        const options = {
+            headers: new HttpHeaders({'Authorization':  sessionStorage.getItem("JWT_TOKEN")})
+          }
+          
+        return this.http.get<any>(this.apiurl+'cancelFlight',options);
     }
 }
