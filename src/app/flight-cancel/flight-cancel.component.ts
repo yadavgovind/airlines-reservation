@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { Flight } from '../models/flight';
+import { Flightshedule } from '../models/flightShedule';
 
 @Component({
   selector: 'app-flight-cancel',
@@ -10,6 +11,7 @@ import { Flight } from '../models/flight';
 export class FlightCancelComponent implements OnInit {
 
   flights: Flight[];
+  flightShedule:Flightshedule;
   constructor(private userService: UserService) { }
 
   ngOnInit() {
