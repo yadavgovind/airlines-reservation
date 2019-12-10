@@ -5,6 +5,7 @@ import { Flight } from '../models/flight';
 import { Observable, Subject } from 'rxjs';
 import { City } from '../models/city';
 import { FlightFilter } from '../models/FlightFilter';
+ 
 
 
 
@@ -111,11 +112,11 @@ export class UserService {
         return this.http.get<any>(this.apiurl+'flight/fights',options);
     }
 
-    cancelFlight(){
+    cancelFlight(flightShedule: any){
         const options = {
             headers: new HttpHeaders({'Authorization':  sessionStorage.getItem("JWT_TOKEN")})
           }
 
-        return this.http.post<any>(this.apiurl+'cancelFlight',options);
+        return this.http.post<any>(this.apiurl+'cancelFlight', flightShedule, options);
     }
-}
+} 
