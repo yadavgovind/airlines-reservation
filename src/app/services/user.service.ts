@@ -115,7 +115,7 @@ export class UserService {
         const options = {
             headers: new HttpHeaders({'Authorization':  sessionStorage.getItem("JWT_TOKEN")})
           }
-          
-        return this.http.get<any>(this.apiurl+'cancelFlight',options);
+
+        return this.http.post<any>(this.apiurl+'cancelFlight',options);
     }
 }
