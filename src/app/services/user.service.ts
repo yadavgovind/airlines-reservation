@@ -5,6 +5,7 @@ import { Flight } from '../models/flight';
 import { Observable, Subject } from 'rxjs';
 import { City } from '../models/city';
 import { FlightFilter } from '../models/FlightFilter';
+ 
 
 
 
@@ -41,6 +42,7 @@ export class UserService {
           }
         return this.http.get<any>(this.apiurl+'flight/cities',options);
     }
+
     getReserVationDeatils(){
         const options = {
             headers: new HttpHeaders({'Authorization':  sessionStorage.getItem("JWT_TOKEN")})
@@ -101,4 +103,20 @@ export class UserService {
     getLoginEvent(): Observable<any> {
         return this.subject.asObservable();
     }
-}
+
+
+    getFlights(){
+        const options = {
+            headers: new HttpHeaders({'Authorization':  sessionStorage.getItem("JWT_TOKEN")})
+          }
+        return this.http.get<any>(this.apiurl+'flight/fights',options);
+    }
+
+    cancelFlight(flightShedule: any){
+        const options = {
+            headers: new HttpHeaders({'Authorization':  sessionStorage.getItem("JWT_TOKEN")})
+          }
+
+        return this.http.post<any>(this.apiurl+'cancelFlight', flightShedule, options);
+    }
+} 
