@@ -14,7 +14,7 @@ export class UserService {
     constructor(private http: HttpClient) { }
     private loginUser:User=undefined;
     private isLogin:boolean=false;
-    private apiurl = 'http://localhost:8090/';
+    private apiurl = 'http://localhost:8080/';
     private subject = new Subject<any>() ;
     getById(id: number) {
         
@@ -24,7 +24,7 @@ export class UserService {
         return this.http.post<User>(this.apiurl+'open/user', user);
     }
     validate(user: User) {
-        return this.http.post<User>('http://localhost:8090/open/user/verifyUser', user);
+        return this.http.post<User>('http://localhost:8080/open/user/verifyUser', user);
     }
     authenticate(user: User){
       return this.http.post<any>(this.apiurl+'open/authenticate',user);
@@ -119,4 +119,13 @@ export class UserService {
 
         return this.http.post<any>(this.apiurl+'cancelFlight', flightShedule, options);
     }
+
+    cancelledBookings()
+    {
+         const options = {
+            headers: new HttpHeaders({'Authorization':  sessionStorage.getItem("JWT_TOKEN")})
+          }
+        return this.http.get<any>(this.apiurl+'bookingCancellations',options);
+    }
+    
 } 
