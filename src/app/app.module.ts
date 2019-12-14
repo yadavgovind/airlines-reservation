@@ -23,6 +23,7 @@ import { AuthAdminGuard } from './auth-admin-guard.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbdModalBasic } from './admin/NgbdModalBasic';
 import { FlightCancelComponent } from './flight-cancel/flight-cancel.component';
+import { BookingCancellationComponent } from './booking-cancellation/booking-cancellation.component';
  
 const appRoutes: Routes = [
   {
@@ -53,7 +54,8 @@ const appRoutes: Routes = [
     CardPaymentComponent,
     ReservationDetailsComponent,
     FieldErrorDisplayComponent,
-    AdminhomeComponent,NgbdModalBasic, FlightCancelComponent
+    AdminhomeComponent,NgbdModalBasic, FlightCancelComponent, 
+    BookingCancellationComponent
   ],
   imports: [
     BrowserModule,

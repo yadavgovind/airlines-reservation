@@ -15,9 +15,23 @@
 									<form (ngSubmit)="this.searchFlights()">
 										<div class="input-info-search">
 											<div class="field-row flex">
+													<div class="one-column">
+															<div class="input-form select-box">
+																<select [(ngModel)]="model.departurecity" name="departureCity">
+																	<option *ngFor="let deptcity of cities"
+																		value={{deptcity.id}} >
+																		<table class="align-lift">
+																			<tr>
+																				<i> {{deptcity.city}}({{deptcity.code}})</i>
+																			</tr>
+																		</table>
+																	</option>
+																</select>
+															</div>
+														</div>
 												<div class="one-column">
 													<div class="input-form select-box">
-														<select [(ngModel)]="model.arrivalCity" place-holder="City"
+														<select [(ngModel)]="model.arrivalCity" placeholder="City"
 															name="arrivalCity">
 															
 															<option *ngFor="let cityObj of cities" value={{cityObj.id}}>
@@ -26,20 +40,7 @@
 														</select>
 													</div>
 												</div>
-												<div class="one-column">
-													<div class="input-form select-box">
-														<select [(ngModel)]="model.departurecity" name="departureCity">
-															<option *ngFor="let deptcity of cities"
-																value={{deptcity.id}} >
-																<table class="align-lift">
-																	<tr>
-																		<i> {{deptcity.city}}({{deptcity.code}})</i>
-																	</tr>
-																</table>
-															</option>
-														</select>
-													</div>
-												</div>
+											
 											</div>
 
 											<div class="field-row flex">
@@ -125,7 +126,7 @@
 					</ul>
 					<div class="flights-list" [hidden]="selIndex!=1">
 						<div class="title-flights bg-default" *ngIf="flights!=undefined&&flights.length>0">
-							<h6><img src="images/icon/icon_flight.png" alt="">{{flights[0].arrivalCity.code}} - {{flights[0].departurecity.code}}</h6>
+							<h6><img src="images/icon/icon_flight.png" alt="">{{flights[0].departurecity.code}} - {{flights[0].arrivalCity.code}}</h6>
 							<span>{{flights.length}} Trips</span>
 						</div>
 						<div class="flights-content bg-white">
@@ -170,7 +171,7 @@
 												<ul>
 													<li>Airlines: <span>{{flight.operatingAirlines}}</span></li>
 													<li>Class: <span>{{model.type}}</span></li>
-													<li>Aircraff: <span>{{flight.flightNumber}}</span></li>
+													<li>Aircraft: <span>{{flight.flightNumber}}</span></li>
 												</ul>
 												<div class="flight-address">
 													<div class="flight-from">
@@ -204,8 +205,21 @@
 													<tr>
 														<td>Adult</td>
 														<td>{{model.adultCount}}</td>
+														<td *ngIf="model.type=='Economy'">
+																{{flight.economyprice}}
+														</td>
+															<td *ngIf="model.type != 'Economy'">
+																	{{flight.business_price}}
+																</td>
 														<td>${{flight.business_price}}</td>
-														<td>${{flight.business_price*model.adultCount}}</td>
+														
+														<!--<td>${{flight.business_price*model.adultCount}}</td>-->
+														<td *ngIf="model.type=='Economy'">
+																{{flight.economyprice*model.adultCount}}
+														</td>
+															<td *ngIf="model.type != 'Economy'">
+																	{{flight.business_price*model.adultCount}}
+																</td>
 													</tr>
 													
 													<tr class="total">
@@ -213,7 +227,11 @@
 														<td></td>
 														<td></td>
 														
-														<td class="price">${{ flight.business_price*model.adultCount}}</td>
+														<td class="price" *ngIf="model.type=='Economy'">		
+															${{flight.economyprice*model.adultCount}}</td>
+
+															<td class="price" *ngIf="model.type != 'Economy'">		
+																	${{flight.business_price*model.adultCount}}</td>
 													</tr>
 												</tbody>
 											</table>
@@ -292,10 +310,14 @@
 												<span class="time-line">{{flight.duration}}</span>
 												<span class="option">Non-Stop</span>
 											</div>
-											<div class="price">
+											<div class="price" *ngIf="model.type=='Economy'">
 												{{flight.economyprice}}<span class="unit">USD</span>
 												<span class="more icon-dot-3"></span>
 											</div>
+											<div class="price" *ngIf="model.type!='Economy'">
+													{{flight.business_price}}<span class="unit">USD</span>
+													<span class="more icon-dot-3"></span>
+												</div>
 										</div>
 										<div class="flight-detail ver-1">
 											<div class="detail">
@@ -377,7 +399,7 @@
 												</table>
 											</div>
 											<p>The baggage information is just for reference. Please Check with airline
-												before check-in. For more information, visit Air India Website. * 1Pc = 23Kg
+												before check-in. For more information, visit operatingAirlines Website. * 1Pc = 23Kg
 											</p>
 										</div>
 									 

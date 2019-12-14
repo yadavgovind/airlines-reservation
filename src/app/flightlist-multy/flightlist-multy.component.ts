@@ -50,10 +50,10 @@ export class FlightlistMultyComponent implements OnInit {
   // dummyBooking:any[]=[{ 
   // "flightId":1,
   // "price":5000,
-  // "firstName":"govind",
-  // "email":"urgovind7@gmail.com",
-  // "lastName":"Yadav",
-  // "phone":"7842413120",
+  // "firstName":"Ishwarya",
+  // "email":"ishwarya.2k7@gmail.com",
+  // "lastName":"A",
+  // "phone":"123333333",
   // "type":"economy",
 
   // }];

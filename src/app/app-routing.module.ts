@@ -12,7 +12,7 @@ import { AuthGuard } from './auth-guard.service';
 import { AdminhomeComponent } from './admin/adminhome/adminhome.component';
 import { AuthAdminGuard } from './auth-admin-guard.service';
 import { FlightCancelComponent } from './flight-cancel/flight-cancel.component';
-
+import {BookingCancellationComponent} from './booking-cancellation/booking-cancellation.component';
 
 const routes: Routes = [
   {path:"login",component:LoginComponent},
@@ -23,7 +23,8 @@ const routes: Routes = [
   {path:"header",component:HeaderComponent},
   {path:"reservation",component: ReservationDetailsComponent},
   {path:"adminhome",component: AdminhomeComponent,canActivate:[AuthAdminGuard]},
-  {path:"flightCancel",component: FlightCancelComponent,canActivate:[AuthAdminGuard]}
+  {path:"flightCancel",component: FlightCancelComponent,canActivate:[AuthAdminGuard]},
+  {path:"bookingCancel",component: BookingCancellationComponent}
   
 ];
 
