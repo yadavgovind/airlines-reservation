@@ -120,12 +120,12 @@ export class UserService {
         return this.http.post<any>(this.apiurl+'cancelFlight', flightShedule, options);
     }
 
-    cancelledBookings()
+    cancelledBookings(date1:any,date2:any)
     {
          const options = {
             headers: new HttpHeaders({'Authorization':  sessionStorage.getItem("JWT_TOKEN")})
           }
-        return this.http.get<any>(this.apiurl+'bookingCancellations',options);
+        return this.http.get<any>(this.apiurl+'bookingCancellations/'+date1+'/'+date2+'',options);
     }
     
 } 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { CancelFilter } from '../models/CancelFilter';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-booking-cancellation',
@@ -10,21 +11,23 @@ import { CancelFilter } from '../models/CancelFilter';
 export class BookingCancellationComponent implements OnInit {
 
 
-cancelFilter = new CancelFilter() ;
-
+  reservation:any[]=[];
   constructor(private userService: UserService) { }
 
   ngOnInit() {
   }
 
 
-  cancelledBookings(){
-    this.userService.cancelledBookings().subscribe(data=>{
-      console.log("success cancelled bookings")
+  cancelledBookings(date1:any,date2:any){
+    this.userService.cancelledBookings(date1.value,date2.value).subscribe(data=>{
+      console.log("success cancelled bookings");
+      this.reservation=data;
     }),
     error=>{
   console.log("error"+error)
-};}
+};
+
+}
 
 
 

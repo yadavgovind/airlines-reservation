@@ -1,25 +1,19 @@
 <p>booking-cancellation works!</p>
 
 
-<form class="form-inline bg-white text-center border border-light p-5" role="form" [formGroup]="flightShedule"
-(ngSubmit)="flightCancel()" novalidate>
+<form class="form-inline bg-white text-center border border-light p-5" role="form">
    
-    <div class="form-group"  style="margin-left: 10px;">
-      
-      <input id="travelDate" type="date" placeholder="2019-11-25"
-                            class="form-control datepicker" formControlName="travelDate">
-    </div>
+    
     <div class="form-group"  style="margin-left: 10px;">
       
             <input id="date1" type="date" placeholder="2019-11-25"
-                                  class="form-control datepicker" formControlName="date1">
+                                  class="form-control" #date1>
           </div>
           <div class="form-group"  style="margin-left: 10px;">
       
-                <input id="date2" type="date" placeholder="2019-11-25"
-                                      class="form-control datepicker" formControlName="date2">
+                <input id="date2" type="date" placeholder="2019-11-25" #date2>
               </div>
-    <button type="submit" class="btn btn-primary btnSend " style="margin-left: 10px;" (click)="cancelledBookings">getCancelledBookings</button>
+    <button type="submit" class="btn btn-primary btnSend " style="margin-left: 10px;" (click)="cancelledBookings(date1,date2)">getCancelledBookings</button>
   </form>
 <section class="flights-list-area bg-default">
         <div class="container">
@@ -37,7 +31,7 @@
                                         <th>No of Seats</th>
                                         <th> Is cancel</th>
                                         <th>JournyDate</th>
-                                        <th>Action</th>
+                                         
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -50,7 +44,7 @@
                                         <td>{{item.cancel}}</td>
                                         <td>{{item.travelDate|date}}</td>
                                        
-                                        <td> <button  id="cancelledBookings" name="cancel" class="btn btn-default"  (click)="cancelledBookings">getCancelledFlights</button></td>
+                                        
                                     </tr>
                                     
                                 </tbody>
